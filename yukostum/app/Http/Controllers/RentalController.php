@@ -46,12 +46,39 @@ class RentalController extends Controller
         return view('admin.sewa', compact('rentals'));
     }
 
-    // 4. (Khusus Admin) Mengubah status pesanan (Setujui/Tolak/Selesai)
+    // 4. (Khusus Admin) Mengubah status pesanan dan Update Stok Otomatis
     public function updateStatus(Request $request, $id)
     {
         $rental = Rental::findOrFail($id);
+        $costume = $rental->costume; // Memanggil data baju yang disewa
+
+        // LOGIKA PENGURANGAN STOK
+        // Jika statusnya DARI pending MENJADI disetujui
+        if ($rental->status == 'pending' && $request->status == 'disetujui') {
+            $costume->decrement('stock'); // Kurangi stok baju sebanyak 1
+        } 
+        
+        // LOGIKA PENAMBAHAN STOK KEMBALI
+        // Jika statusnya DARI disetujui MENJADI selesai (dikembalikan)
+        elseif ($rental->status == 'disetujui' && $request->status == 'selesai') {
+            $costume->increment('stock'); // Tambah stok baju sebanyak 1
+        }
+
+        // Simpan status baru pesanan ke database
         $rental->update(['status' => $request->status]);
 
-        return back()->with('sukses', 'Status pesanan berhasil diperbarui!');
+        return back()->with('sukses', 'Sip! Status pesanan diperbarui dan stok gudang otomatis disesuaikan.');
+    }
+
+    // 5. (Khusus Pelanggan) Menampilkan riwayat pesanan miliknya sendiri
+    public function indexPelanggan()
+    {
+        // Cari pesanan yang user_id-nya sama dengan ID orang yang sedang login
+        $rentals = Rental::with('costume')
+                         ->where('user_id', Auth::id())
+                         ->orderBy('created_at', 'desc')
+                         ->get();
+                         
+        return view('riwayat', compact('rentals'));
     }
 }

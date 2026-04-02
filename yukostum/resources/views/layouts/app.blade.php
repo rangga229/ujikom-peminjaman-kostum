@@ -16,10 +16,18 @@
                 🎭 YUKOSTUM
             </a>
             
-            <div class="d-flex align-items-center">
+           <div class="d-flex align-items-center">
                 @auth
+                    @if(Auth::user()->role == 'admin')
+                        <a href="/admin/kostum" class="text-white text-decoration-none fw-bold me-3">📦 Gudang Kostum</a>
+                        <a href="/admin/sewa" class="text-white text-decoration-none fw-bold me-4">📋 Pesanan Masuk</a>
+                    @else
+                        <a href="/katalog" class="text-white text-decoration-none fw-bold me-3">🏠 Katalog Kostum</a>
+                        <a href="/riwayat" class="text-white text-decoration-none fw-bold me-4">🛍️ Riwayat Sewa Saya</a>
+                    @endif
+
                     <span class="text-white me-3 fw-bold">
-                        Halo, {{ Auth::user()->name }} 
+                        Halo, {{ Auth::user()->name }}
                         <span class="badge bg-secondary ms-1">{{ strtoupper(Auth::user()->role) }}</span>
                     </span>
                     <form action="/logout" method="POST" class="m-0">
