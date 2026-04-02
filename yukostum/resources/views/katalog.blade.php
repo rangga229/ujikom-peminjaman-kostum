@@ -19,7 +19,16 @@
 <div class="row">
     @forelse($costumes as $kostum)
     <div class="col-md-4 mb-4">
-        <div class="card shadow-sm border-0 h-100">
+        <div class="card shadow-sm border-0 h-100 overflow-hidden">
+            
+            @if(!empty($kostum->images) && count($kostum->images) > 0)
+                <img src="{{ asset('images/kostum/' . $kostum->images[0]) }}" class="card-img-top object-fit-cover" style="height: 250px; width: 100%;" alt="{{ $kostum->name }}">
+            @else
+                <div class="card-img-top bg-light d-flex justify-content-center align-items-center" style="height: 250px;">
+                    <span class="text-muted">🚫 Belum ada foto</span>
+                </div>
+            @endif
+
             <div class="card-header bg-dark text-white">
                 <h5 class="card-title mb-0 fw-bold">{{ $kostum->name }}</h5>
                 <small class="badge bg-secondary mt-1">{{ $kostum->type }}</small>
@@ -34,26 +43,26 @@
                         <span>🎨 Warna</span> <strong>{{ $kostum->color }}</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between px-0">
-                        <span>🧵 Bahan</span> <strong>{{ $kostum->material ?: '-' }}</strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between px-0">
                         <span>📦 Tersisa</span> 
-                        <span class="badge bg-success rounded-pill fs-6">{{ $kostum->stock }} Pcs</span>
+                        <span class="badge {{ $kostum->stock > 0 ? 'bg-success' : 'bg-danger' }} rounded-pill fs-6">
+                            {{ $kostum->stock > 0 ? $kostum->stock . ' Pcs' : 'Habis' }}
+                        </span>
                     </li>
                 </ul>
                 
                 @if($kostum->condition == 'diperbaiki')
                     <div class="alert alert-warning py-2 text-center mb-0" style="font-size: 14px;">
-                        ⚠️ Sedang dalam perbaikan ringan, tapi tetap bisa dipesan.
+                        ⚠️ Sedang dalam perbaikan ringan.
                     </div>
                 @endif
             </div>
 
             <div class="card-footer bg-white border-0 p-3">
-                <a href="/sewa/{{ $kostum->id }}" class="btn btn-primary btn-lg w-100 fw-bold text-center">
-                    SEWA SEKARANG
+                <a href="/katalog/{{ $kostum->id }}" class="btn btn-outline-primary btn-lg w-100 fw-bold text-center">
+                    🔍 LIHAT DETAIL
                 </a>
             </div>
+            
         </div>
     </div>
     @empty

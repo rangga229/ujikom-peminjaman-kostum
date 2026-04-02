@@ -12,8 +12,15 @@
                     <div class="alert alert-success">{{ session('sukses') }}</div>
                 @endif
 
-                <form action="/admin/kostum" method="POST">
+                <form action="/admin/kostum" method="POST" enctype="multipart/form-data">
                     @csrf
+
+                    <div class="mb-3">
+    <label class="form-label fw-bold">Foto Kostum</label>
+    <input type="file" name="images[]" class="form-control" accept="images/*" multiple>
+    <div class="form-text">Format: JPG, PNG. Ukuran ideal kotak.</div>
+</div>
+
                     <div class="mb-3">
                         <label class="form-label">Nama Kostum</label>
                         <input type="text" name="name" class="form-control" placeholder="Contoh: Gaun Kebaya Modern" required>

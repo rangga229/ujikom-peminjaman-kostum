@@ -20,6 +20,8 @@ Route::get('/', function () {
 // Halaman Katalog (Etalase Toko)
 Route::get('/katalog', [KatalogController::class, 'index']);
 
+Route::get('/katalog/{id}', [KatalogController::class, 'show']);
+
 // Halaman Login & Prosesnya
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'prosesLogin']);

@@ -18,16 +18,28 @@ class CostumeController extends Controller
     // Menyimpan data kostum baru ke database
     public function store(Request $request)
     {
-        Costume::create([
-            'name' => $request->name,
-            'material' => $request->material,
-            'size' => $request->size,
-            'color' => $request->color,
-            'origin' => $request->origin,
-            'type' => $request->type,
-            'stock' => $request->stock,
-            'condition' => $request->condition,
-        ]);
+       // LOGIKA UPLOAD BANYAK FOTO
+     $namaFotoArray = []; // Siapkan keranjang kosong
+     if ($request->hasFile('images')) {
+         foreach ($request->file('images') as $foto) {
+             // Beri nama unik agar tidak bentrok
+             $namaFoto = time() . '-' . uniqid() . '.' . $foto->getClientOriginalExtension();
+             $foto->move(public_path('images/kostum'), $namaFoto);
+             $namaFotoArray[] = $namaFoto; // Masukkan ke keranjang
+         }
+     }
+
+     // Simpan ke database
+     Costume::create([
+         'name' => $request->name,
+         'images' => $namaFotoArray, // Masukkan keranjang foto
+         'type' => $request->type,
+         'size' => $request->size,
+         'color' => $request->color,
+         'material' => $request->material,
+         'stock' => $request->stock,
+         'condition' => $request->condition,
+     ]);
 
         return back()->with('sukses', ' Kostum dengan detail baru berhasil ditambahkan.');
     }
