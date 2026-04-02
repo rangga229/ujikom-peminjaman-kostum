@@ -2,30 +2,51 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CostumeController;
-
-// Rute untuk Manajemen Kostum
-Route::get('/admin/kostum', [CostumeController::class, 'index']);
-Route::post('/admin/kostum', [CostumeController::class, 'store']);
-
-// Rute untuk Manajemen Kostum yang sudah ada
-Route::get('/admin/kostum', [CostumeController::class, 'index']);
-Route::post('/admin/kostum', [CostumeController::class, 'store']);
-
-// 3 Rute Baru untuk Edit dan Hapus:
-Route::get('/admin/kostum/{id}/edit', [CostumeController::class, 'edit']); // Buka halaman edit
-Route::put('/admin/kostum/{id}', [CostumeController::class, 'update']); // Proses simpan editan
-Route::delete('/admin/kostum/{id}', [CostumeController::class, 'destroy']); // Proses hapus
-
 use App\Http\Controllers\KatalogController;
+use App\Http\Controllers\RentalController;
+use App\Http\Controllers\AuthController;
 
-// Rute Halaman Utama (Katalog Pelanggan) - Bisa diakses siapa saja
-Route::get('/katalog', [KatalogController::class, 'index']);
+/*
+|--------------------------------------------------------------------------
+| AREA PUBLIK (Bebas Diakses Siapapun Tanpa Login)
+|--------------------------------------------------------------------------
+*/
 
-// Jika orang mengetik alamat awal (localhost:8000), langsung arahkan ke katalog
+// Jika buka website awal, langsung arahkan ke Katalog
 Route::get('/', function () {
-    return redirect('/katalog');
+    return redirect('/login');
 });
 
-Route::get('/', function () {
-    return view('welcome');
+// Halaman Katalog (Etalase Toko)
+Route::get('/katalog', [KatalogController::class, 'index']);
+
+// Halaman Login & Prosesnya
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'prosesLogin']);
+
+
+/*
+|--------------------------------------------------------------------------
+| AREA TERKUNCI (Wajib Login)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function () {
+    
+    // dialihkan ke katalog setelah login
+    Route::get('/katalog', [KatalogController::class, 'index']);
+
+    // Proses Logout
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    // --- FITUR ADMIN (Manajemen Kostum) ---
+    Route::get('/admin/kostum', [CostumeController::class, 'index']);
+    Route::post('/admin/kostum', [CostumeController::class, 'store']);
+    Route::get('/admin/kostum/{id}/edit', [CostumeController::class, 'edit']);
+    Route::put('/admin/kostum/{id}', [CostumeController::class, 'update']);
+    Route::delete('/admin/kostum/{id}', [CostumeController::class, 'destroy']);
+
+    // --- FITUR PELANGGAN (Menyewa Baju) ---
+    Route::get('/sewa/{id}', [RentalController::class, 'create']);
+    Route::post('/sewa/{id}', [RentalController::class, 'store']);
+
 });

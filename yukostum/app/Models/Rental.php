@@ -16,4 +16,10 @@ class Rental extends Model
     {
         return $this->belongsTo(Costume::class);
     }
+
+    // Tambahkan baris ini untuk memanggil nama peminjam:
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

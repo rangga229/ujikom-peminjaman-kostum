@@ -6,6 +6,16 @@
     <p class="text-muted">Pilih kostum impianmu untuk acara spesial. Cepat, sebelum kehabisan!</p>
 </div>
 
+@if(session('sukses'))
+<div class="row">
+    <div class="col-12 mb-3">
+        <div class="alert alert-success fw-bold text-center shadow-sm">
+            🎉 {{ session('sukses') }}
+        </div>
+    </div>
+</div>
+@endif
+
 <div class="row">
     @forelse($costumes as $kostum)
     <div class="col-md-4 mb-4">
@@ -40,12 +50,9 @@
             </div>
 
             <div class="card-footer bg-white border-0 p-3">
-                <form action="#" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">
-                        SEWA SEKARANG
-                    </button>
-                </form>
+                <a href="/sewa/{{ $kostum->id }}" class="btn btn-primary btn-lg w-100 fw-bold text-center">
+                    SEWA SEKARANG
+                </a>
             </div>
         </div>
     </div>
