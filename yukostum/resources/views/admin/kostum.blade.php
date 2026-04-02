@@ -85,14 +85,14 @@
                 📦 Daftar Kostum Tersedia
             </div>
             <div class="card-body p-0 table-responsive">
-                <table class="table table-striped table-hover mb-0">
+                <table class="table table-striped table-hover mb-0 align-middle">
                     <thead class="table-light">
                         <tr>
                             <th>Nama & Tipe</th>
                             <th>Detail</th>
                             <th>Stok</th>
                             <th>Kondisi</th>
-                        </tr>
+                            <th>Aksi</th> </tr>
                     </thead>
                     <tbody>
                         @forelse($costumes as $kostum)
@@ -117,10 +117,21 @@
                                     <span class="badge bg-danger">Rusak</span>
                                 @endif
                             </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="/admin/kostum/{{ $kostum->id }}/edit" class="btn btn-warning btn-sm fw-bold">Edit</a>
+                                    
+                                    <form action="/admin/kostum/{{ $kostum->id }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm fw-bold" onclick="return confirm('Yakin ingin menghapus kostum {{ $kostum->name }} ini?')">Hapus</button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">Belum ada kostum yang ditambahkan.</td>
+                            <td colspan="5" class="text-center text-muted py-4">Belum ada kostum yang ditambahkan.</td>
                         </tr>
                         @endforelse
                     </tbody>
