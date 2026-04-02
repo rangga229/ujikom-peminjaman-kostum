@@ -13,7 +13,7 @@
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="/katalog">
                 <img src="{{ asset('images/logo_circle_yukostum.png') }}" alt="Logo Katak" width="45" height="45" class="me-2 rounded-circle border border-white">
-                🎭 YUKOSTUM
+                YUKOSTUM
             </a>
             
            <div class="d-flex align-items-center">
@@ -46,5 +46,6 @@
         @yield('content')
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

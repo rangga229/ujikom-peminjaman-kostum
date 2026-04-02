@@ -8,6 +8,10 @@ class Costume extends Model
 {
     // Tambahkan baris ini agar data boleh diisi dari website:
     protected $fillable = [
-        'name', 'material', 'size', 'color', 'origin', 'type', 'stock', 'condition'
+        'name', 'images', 'type', 'size', 'color', 'material', 'stock', 'condition'
     ];
+
+    protected $casts = [
+     'images' => 'array',
+ ];
 }
