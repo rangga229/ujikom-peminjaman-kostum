@@ -16,6 +16,16 @@ Route::get('/admin/kostum/{id}/edit', [CostumeController::class, 'edit']); // Bu
 Route::put('/admin/kostum/{id}', [CostumeController::class, 'update']); // Proses simpan editan
 Route::delete('/admin/kostum/{id}', [CostumeController::class, 'destroy']); // Proses hapus
 
+use App\Http\Controllers\KatalogController;
+
+// Rute Halaman Utama (Katalog Pelanggan) - Bisa diakses siapa saja
+Route::get('/katalog', [KatalogController::class, 'index']);
+
+// Jika orang mengetik alamat awal (localhost:8000), langsung arahkan ke katalog
+Route::get('/', function () {
+    return redirect('/katalog');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
