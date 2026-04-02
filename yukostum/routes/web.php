@@ -45,8 +45,19 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/kostum/{id}', [CostumeController::class, 'update']);
     Route::delete('/admin/kostum/{id}', [CostumeController::class, 'destroy']);
 
+    // --- FITUR ADMIN (Manajemen Pesanan Sewa) ---
+    Route::get('/admin/sewa', [RentalController::class, 'indexAdmin']);
+    Route::put('/admin/sewa/{id}', [RentalController::class, 'updateStatus']);
+
     // --- FITUR PELANGGAN (Menyewa Baju) ---
     Route::get('/sewa/{id}', [RentalController::class, 'create']);
     Route::post('/sewa/{id}', [RentalController::class, 'store']);
+
+    // --- FITUR PELANGGAN (Sewa Baju) ---
+    Route::get('/sewa/{id}', [RentalController::class, 'create']);
+    Route::post('/sewa/{id}', [RentalController::class, 'store']);
+    
+    // Baris untuk riwayat pelanggan:
+    Route::get('/riwayat', [RentalController::class, 'indexPelanggan']);
 
 });
