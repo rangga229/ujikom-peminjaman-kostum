@@ -39,6 +39,7 @@ class CostumeController extends Controller
          'material' => $request->material,
          'stock' => $request->stock,
          'condition' => $request->condition,
+         'price' => $request->price
      ]);
 
         return back()->with('sukses', ' Kostum dengan detail baru berhasil ditambahkan.');
