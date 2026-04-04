@@ -11,7 +11,7 @@ class KatalogController extends Controller
     public function index()
     {
         // Mengambil semua data kostum dari database, diurutkan dari yang terbaru
-        $costumes = Costume::orderBy('created_at', 'desc')->get();
+        $costumes = Costume::orderBy('created_at', 'desc')->paginate(6);
         
         return view('katalog', compact('costumes'));
     }

@@ -76,4 +76,8 @@
             </div>
         @endforelse
     </div>
+    <div class="d-flex justify-content-center mt-5 mb-4">
+        {{ $costumes->links() }}
+    </div>
+    </div>
 @endsection
