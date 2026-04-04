@@ -22,8 +22,8 @@
                         <a href="/admin/kostum" class="text-white text-decoration-none fw-bold me-3">📦 Gudang Kostum</a>
                         <a href="/admin/sewa" class="text-white text-decoration-none fw-bold me-4">📋 Pesanan Masuk</a>
                     @else
-                        <a href="/katalog" class="text-white text-decoration-none fw-bold me-3">🏠 Katalog Kostum</a>
-                        <a href="/riwayat" class="text-white text-decoration-none fw-bold me-4">🛍️ Riwayat Sewa Saya</a>
+                        <a href="/katalog" class="text-white text-decoration-none fw-bold me-3"> Katalog Kostum</a>
+                        <a href="/riwayat" class="text-white text-decoration-none fw-bold me-4"> Riwayat Sewa Saya</a>
                     @endif
 
                     <span class="text-white me-3 fw-bold">
