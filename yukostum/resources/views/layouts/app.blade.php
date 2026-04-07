@@ -21,6 +21,7 @@
                     @if(Auth::user()->role == 'admin')
                         <a href="/admin/kostum" class="text-white text-decoration-none fw-bold me-3">📦 Gudang Kostum</a>
                         <a href="/admin/sewa" class="text-white text-decoration-none fw-bold me-4">📋 Pesanan Masuk</a>
+                        <a href="/admin/users" class="text-white text-decoration-none fw-bold me-3">👥 Kelola Pengguna</a>
                         <!-- elseif buat petugas -->
                     @else
                         <a href="/katalog" class="text-white text-decoration-none fw-bold me-3"> Katalog Kostum</a>

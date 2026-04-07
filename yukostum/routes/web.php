@@ -5,6 +5,7 @@ use App\Http\Controllers\CostumeController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Route::post('/login', [AuthController::class, 'prosesLogin']);
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
-    
+
     // dialihkan ke katalog setelah login
     Route::get('/katalog', [KatalogController::class, 'index']);
 
@@ -51,6 +52,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/sewa', [RentalController::class, 'indexAdmin']);
     Route::put('/admin/sewa/{id}', [RentalController::class, 'updateStatus']);
 
+    // --- FITUR ADMIN CRUD User
+    // Rute CRUD Pengguna (Admin)
+    Route::get('/admin/users', [UserController::class, 'index']);
+    Route::post('/admin/users', [UserController::class, 'store']);
+    Route::get('/admin/users/{id}/edit', [UserController::class, 'edit']);
+    Route::put('/admin/users/{id}', [UserController::class, 'update']);
+    Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
+
     // --- FITUR PELANGGAN (Menyewa Baju) ---
     Route::get('/sewa/{id}', [RentalController::class, 'create']);
     Route::post('/sewa/{id}', [RentalController::class, 'store']);
@@ -58,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
     // --- FITUR PELANGGAN (Sewa Baju) ---
     Route::get('/sewa/{id}', [RentalController::class, 'create']);
     Route::post('/sewa/{id}', [RentalController::class, 'store']);
-    
+
     // Baris untuk riwayat pelanggan:
     Route::get('/riwayat', [RentalController::class, 'indexPelanggan']);
 
