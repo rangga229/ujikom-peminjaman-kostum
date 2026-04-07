@@ -11,7 +11,7 @@ class CostumeController extends Controller
     public function index()
     {
         // Mengambil semua data kostum dari database (khusus Admin)
-        $costumes = Costume::all(); 
+        $costumes = Costume::all();
         return view('admin.kostum', compact('costumes'));
     }
 
@@ -19,8 +19,8 @@ class CostumeController extends Controller
     public function store(Request $request)
     {
         // Siapkan keranjang kosong untuk menampung nama-nama file foto
-        $namaFotoArray = []; 
-        
+        $namaFotoArray = [];
+
         // Cek jika ada file gambar yang diunggah
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $foto) {
@@ -29,7 +29,7 @@ class CostumeController extends Controller
                 // Pindahkan file fisik ke folder public/images/kostum
                 $foto->move(public_path('images/kostum'), $namaFoto);
                 // Masukkan nama file ke keranjang
-                $namaFotoArray[] = $namaFoto; 
+                $namaFotoArray[] = $namaFoto;
             }
         }
 
@@ -53,7 +53,7 @@ class CostumeController extends Controller
     public function edit($id)
     {
         // Cari kostum berdasarkan ID, jika tidak ada akan muncul error 404
-        $costume = Costume::findOrFail($id); 
+        $costume = Costume::findOrFail($id);
         return view('admin.edit_kostum', compact('costume'));
     }
 
@@ -61,13 +61,13 @@ class CostumeController extends Controller
     public function update(Request $request, $id)
     {
         $costume = Costume::findOrFail($id);
-        
+
         // Ambil semua data isian form, KECUALI bagian foto
-        $data = $request->except('images'); 
+        $data = $request->except('images');
 
         // Jika Admin mengunggah foto baru saat proses edit
         if ($request->hasFile('images')) {
-            
+
             // Hapus foto-foto lama secara fisik dari folder agar tidak menumpuk
             if (!empty($costume->images)) {
                 foreach ($costume->images as $oldImage) {
@@ -86,7 +86,7 @@ class CostumeController extends Controller
                 $foto->move(public_path('images/kostum'), $namaFoto);
                 $namaFotoArray[] = $namaFoto;
             }
-            
+
             // Tambahkan nama-nama foto baru ke dalam paket data yang akan diupdate
             $data['images'] = $namaFotoArray;
         }
@@ -101,6 +101,8 @@ class CostumeController extends Controller
     public function destroy($id)
     {
         $costume = Costume::findOrFail($id);
+        $namaKostum = $costume->name;
+
 
         // Hapus SEMUA file foto fisik milik kostum ini dari folder
         if (!empty($costume->images)) {
@@ -114,6 +116,7 @@ class CostumeController extends Controller
 
         // Setelah file fisiknya bersih, baru hapus catatan kostum dari database MySQL
         $costume->delete();
+        \App\Models\ActivityLog::record('Hapus Kostum', "Menghapus kostum bernama: $namaKostum");
 
         return redirect('/admin/kostum')->with('sukses', 'Kostum dan seluruh file fotonya berhasil dihapus bersih dari sistem.');
     }

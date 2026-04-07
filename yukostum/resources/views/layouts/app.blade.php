@@ -37,6 +37,7 @@
                                 <li class="nav-item"><a class="nav-link" href="/admin/kostum">👕 Kelola Kostum</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/admin/sewa">🛒 Pesanan Sewa</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/admin/users">👥 Kelola Pengguna</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/admin/logs">🕵️‍♂️ Log Sistem</a></li>
                             @elseif(Auth::user()->role == 'petugas')
                                 <li class="nav-item"><a class="nav-link" href="/dashboard">📊 Dashboard</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/admin/kostum">👕 Kelola Kostum</a></li>

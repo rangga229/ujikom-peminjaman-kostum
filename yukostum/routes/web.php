@@ -69,6 +69,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sewa/{id}', [RentalController::class, 'create']);
     Route::post('/sewa/{id}', [RentalController::class, 'store']);
 
+    // FITUR ACTIVITY LOG
+    Route::get('/admin/logs', [App\Http\Controllers\ActivityLogController::class, 'index']);
+
     // Baris untuk riwayat pelanggan:
     Route::get('/riwayat', [RentalController::class, 'indexPelanggan']);
 
