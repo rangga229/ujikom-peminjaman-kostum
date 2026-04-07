@@ -6,6 +6,7 @@ use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,5 +71,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Baris untuk riwayat pelanggan:
     Route::get('/riwayat', [RentalController::class, 'indexPelanggan']);
+
+    // Rute Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
 });

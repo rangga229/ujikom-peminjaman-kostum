@@ -3,51 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yukostum - Sewa Kostum</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Yukostum - Sewa Kostum Terlengkap</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f4f6f9; /* Warna latar belakang abu-abu sangat muda agar elegan */
+        }
+    </style>
 </head>
-<body style="background-color: #fcf4d9;">
+<body>
 
-    @if(!request()->routeIs('login'))
-    <nav class="navbar navbar-expand-lg navbar-dark mb-4 shadow-sm" style="background-color: #2c5e7b;">
+@if(!request()->is('login') && !request()->is('register'))
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="/katalog">
-                <img src="{{ asset('images/logo_circle_yukostum.png') }}" alt="Logo Katak" width="45" height="45" class="me-2 rounded-circle border border-white">
-                YUKOSTUM
-            </a>
+            <a class="navbar-brand fw-bold text-warning" href="/katalog">🎭 Yukostum</a>
             
-           <div class="d-flex align-items-center">
-                @auth
-                    @if(Auth::user()->role == 'admin')
-                        <a href="/admin/kostum" class="text-white text-decoration-none fw-bold me-3">📦 Gudang Kostum</a>
-                        <a href="/admin/sewa" class="text-white text-decoration-none fw-bold me-4">📋 Pesanan Masuk</a>
-                        <a href="/admin/users" class="text-white text-decoration-none fw-bold me-3">👥 Kelola Pengguna</a>
-                        <!-- elseif buat petugas -->
-                    @else
-                        <a href="/katalog" class="text-white text-decoration-none fw-bold me-3"> Katalog Kostum</a>
-                        <a href="/riwayat" class="text-white text-decoration-none fw-bold me-4"> Riwayat Sewa Saya</a>
-                    @endif
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/katalog">Katalog Kostum</a>
+                    </li>
 
-                    <span class="text-white me-3 fw-bold">
-                        Halo, {{ Auth::user()->name }}
-                        <span class="badge bg-secondary ms-1">{{ strtoupper(Auth::user()->role) }}</span>
-                    </span>
-                    <form action="/logout" method="POST" class="m-0">
-                        @csrf
-                        <button class="btn btn-danger btn-sm fw-bold">Keluar</button>
-                    </form>
-                @else
-                    <a href="/login" class="btn btn-light btn-sm fw-bold">Masuk Admin</a>
-                @endauth
+                    @auth
+                        @if(Auth::user()->role == 'admin')
+                            <li class="nav-item"><a class="nav-link" href="/dashboard">📊 Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/admin/kostum">👕 Kelola Kostum</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/admin/users">👥 Kelola Pengguna</a></li>
+                        
+                        @elseif(Auth::user()->role == 'petugas')
+                            <li class="nav-item"><a class="nav-link" href="/dashboard">📊 Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/admin/kostum">👕 Kelola Kostum</a></li>
+                            @elseif(Auth::user()->role == 'pelanggan')
+                            <li class="nav-item"><a class="nav-link" href="#">📝 Riwayat Sewa Saya</a></li>
+                        @endif
+                    @endauth
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Masuk</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-warning text-dark fw-bold ms-2 px-3 py-1 mt-1" href="/register">Daftar</a>
+                        </li>
+                    
+                    @else
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                👋 Halo, {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                                <li>
+                                    <form action="/logout" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger fw-bold">🚪 Keluar (Logout)</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endguest
+                </ul>
             </div>
         </div>
     </nav>
-    @endif
+@endif
+    <main class="container py-5 min-vh-100">
+        
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show shadow-sm fw-bold" role="alert">
+                🚨 {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
-    <div class="container">
         @yield('content')
-    </div>
+        
+    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <p class="mb-0 opacity-75">&copy; {{ date('Y') }} Yukostum. Sistem Penyewaan Kostum Terpercaya.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>
