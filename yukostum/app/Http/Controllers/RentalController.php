@@ -78,27 +78,42 @@ class RentalController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $rental = Rental::findOrFail($id);
-        $costume = $rental->costume; // Memanggil data baju yang disewa
+        $costume = $rental->costume; 
 
-        // LOGIKA PENGURANGAN STOK
-        // Jika statusnya DARI pending MENJADI disetujui
-        if ($rental->status == 'pending' && $request->status == 'disetujui') {
-            // Pastikan stok tidak minus saat disetujui (Keamanan tambahan)
+        $statusLama = $rental->status;
+        $inputStatus = strtolower(trim($request->status));
+        $statusDatabase = $inputStatus; // Nilai bawaan
+
+        if ($inputStatus == 'approved' || $inputStatus == 'disetujui') {
+            $statusDatabase = 'disetujui';
+        } elseif ($inputStatus == 'completed' || $inputStatus == 'selesai' || $inputStatus == 'dikembalikan') {
+            $statusDatabase = 'dikembalikan'; 
+        } elseif ($inputStatus == 'cancelled' || $inputStatus == 'ditolak') {
+            $statusDatabase = 'ditolak';
+        }
+
+        // 📦 LOGIKA PENGURANGAN STOK (pending -> disetujui)
+        if ($rental->status == 'pending' && $statusDatabase == 'disetujui') {
             if ($costume->stock > 0) {
-                $costume->decrement('stock'); // Kurangi stok baju sebanyak 1
+                $costume->decrement('stock'); 
             } else {
                 return back()->with('error', 'Gagal menyetujui pesanan. Stok baju ini sudah habis.');
             }
         }
-
-        // LOGIKA PENAMBAHAN STOK KEMBALI
-        // Jika statusnya DARI disetujui MENJADI selesai (dikembalikan)
-        elseif ($rental->status == 'disetujui' && $request->status == 'selesai') {
-            $costume->increment('stock'); // Tambah stok baju sebanyak 1
+        
+        // 📦 LOGIKA PENAMBAHAN STOK KEMBALI (disetujui -> dikembalikan)
+        elseif ($rental->status == 'disetujui' && $statusDatabase == 'dikembalikan') {
+            $costume->increment('stock'); 
         }
 
-        // Simpan status baru pesanan ke database
-        $rental->update(['status' => $request->status]);
+        // Simpan ke database dengan kata yang diizinkan ENUM
+        $rental->update(['status' => $statusDatabase]);
+
+        // Log activity
+        \App\Models\ActivityLog::record(
+            'Update Status Sewa',
+            "Mengubah pesanan ID #{$rental->id} (Kostum: {$costume->name}) menjadi status '{$statusDatabase}'."
+        );
 
         return back()->with('sukses', 'Sip! Status pesanan diperbarui dan stok gudang otomatis disesuaikan.');
     }
