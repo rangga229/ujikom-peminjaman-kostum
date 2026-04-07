@@ -50,7 +50,8 @@
                             <div class="bg-light p-3 rounded-3 mb-4">
                                 <span class="text-muted d-block">Harga Sewa</span>
                                 <h2 class="text-primary fw-bold mb-0">Rp {{ number_format($costume->price, 0, ',', '.') }}
-                                    <span class="fs-6 text-muted">/ hari</span></h2>
+                                    <span class="fs-6 text-muted">/ hari</span>
+                                </h2>
                             </div>
                             <div class="row mb-4">
                                 <div class="col-6 mb-3">
@@ -74,13 +75,21 @@
                             <hr>
 
                             <div class="mt-auto pt-3">
-                                @if ($costume->stock > 0)
-                                    <a href="/sewa/{{ $costume->id }}"
-                                        class="btn btn-primary btn-lg w-100 fw-bold py-3 shadow-sm">
-                                        🛒 SEWA SEKARANG
-                                    </a>
+                                @if (strtolower($costume->condition) == 'rusak' || strtolower($costume->condition) == 'diperbaiki')
+                                    <div class="alert alert-danger shadow-sm border-0 mt-4">
+                                        <h6 class="fw-bold mb-1">⚠️ Tidak Dapat Disewa</h6>
+                                        <p class="mb-0 text-dark small">Maaf, kostum ini sedang dalam kondisi
+                                            <strong>{{ $costume->condition }}</strong> dan tidak dapat disewa untuk
+                                            sementara waktu.
+                                        </p>
+                                    </div>
+                                    <button class="btn btn-secondary w-100 fw-bold mt-2 py-2" disabled>
+                                        🚫 Kostum Tidak Tersedia
+                                    </button>
                                 @else
-                                    <button class="btn btn-danger btn-lg w-100 fw-bold py-3" disabled>STOK HABIS</button>
+                                    <a href="/sewa/{{ $costume->id }}" class="btn btn-primary w-100 fw-bold mt-3 py-2">
+                                        📅 Pilih Tanggal Sewa
+                                    </a>
                                 @endif
                                 <a href="/katalog" class="btn btn-light w-100 mt-2 text-muted fw-bold">Kembali ke
                                     Katalog</a>
