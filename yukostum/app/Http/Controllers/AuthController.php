@@ -43,6 +43,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         
-        return redirect('/katalog'); // Setelah logout, kembalikan ke etalase toko
+        return redirect('/login');
     }
 }

@@ -14,24 +14,24 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-        'name' => 'Bos Admin',
-        'email' => 'admin@yukostum.com',
-        'password' => bcrypt('rahasia123'),
-        'role' => 'admin'
+            'name' => 'Bos Admin',
+            'email' => 'admin@yukostum.com',
+            'password' => bcrypt('rahasia123'),
+            'role' => 'admin'
         ]);
 
         User::create([
-        'name' => 'Petugas Gudang',
-        'email' => 'petugas@yukostum.com',
-        'password' => bcrypt('rahasia123'),
-        'role' => 'petugas'
+            'name' => 'Petugas Gudang',
+            'email' => 'petugas@yukostum.com',
+            'password' => bcrypt('rahasia123'),
+            'role' => 'petugas'
         ]);
 
         User::create([
-        'name' => 'Pelanggan',
-        'email' => 'user@gmail.com',
-        'password' => bcrypt('rahasia123'),
-        'role' => 'pelanggan'
+            'name' => 'Pelanggan',
+            'email' => 'user@gmail.com',
+            'password' => bcrypt('rahasia123'),
+            'role' => 'pelanggan'
         ]);
     }
 }
