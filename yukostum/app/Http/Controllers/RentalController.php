@@ -74,7 +74,7 @@ class RentalController extends Controller
         return view('admin.sewa', compact('rentals'));
     }
 
-    // 4. (Khusus Admin) Mengubah status pesanan dan Update Stok Otomatis
+    // 4. (Khusus Admin/Petugas) Mengubah status pesanan, Denda, dan Update Stok
     public function updateStatus(Request $request, $id)
     {
         $rental = Rental::findOrFail($id);
@@ -82,7 +82,7 @@ class RentalController extends Controller
 
         $statusLama = $rental->status;
         $inputStatus = strtolower(trim($request->status));
-        $statusDatabase = $inputStatus; // Nilai bawaan
+        $statusDatabase = $inputStatus; 
 
         if ($inputStatus == 'approved' || $inputStatus == 'disetujui') {
             $statusDatabase = 'disetujui';
@@ -92,30 +92,63 @@ class RentalController extends Controller
             $statusDatabase = 'ditolak';
         }
 
-        // 📦 LOGIKA PENGURANGAN STOK (pending -> disetujui)
+        // 📦 LOGIKA SAAT DISETUJUI (Kurangi Stok)
         if ($rental->status == 'pending' && $statusDatabase == 'disetujui') {
             if ($costume->stock > 0) {
                 $costume->decrement('stock'); 
             } else {
-                return back()->with('error', 'Gagal menyetujui pesanan. Stok baju ini sudah habis.');
+                return back()->with('error', 'Gagal menyetujui pesanan. Stok baju habis.');
             }
+            $rental->update(['status' => $statusDatabase]);
         }
         
-        // 📦 LOGIKA PENAMBAHAN STOK KEMBALI (disetujui -> dikembalikan)
+        // 📦 LOGIKA SAAT DIKEMBALIKAN (Upload Foto, Denda, & Tambah Stok)
         elseif ($rental->status == 'disetujui' && $statusDatabase == 'dikembalikan') {
-            $costume->increment('stock'); 
+            
+            // 1. Validasi input file dan denda
+            $request->validate([
+                'denda' => 'required|numeric|min:0',
+                'bukti_kembali' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'kondisi_kembali' => 'required|string'
+            ]);
+
+            // 2. Proses Simpan Foto
+            $namaFileBukti = null;
+            if ($request->hasFile('bukti_kembali')) {
+                $file = $request->file('bukti_kembali');
+                $namaFileBukti = time() . '_bukti_' . $file->getClientOriginalName();
+                $file->move(public_path('images/bukti'), $namaFileBukti);
+            }
+
+            // 3. Logika Pintar untuk Kostum
+            if ($request->kondisi_kembali == 'rusak') {
+                $costume->update(['condition' => 'rusak']); // Otomatis tandai kostum rusak di katalog
+            }
+
+            // Tambah stok kembali HANYA jika baju tidak hilang
+            if ($request->kondisi_kembali != 'hilang') {
+                $costume->increment('stock'); 
+            }
+
+            // 4. Simpan ke database
+            $rental->update([
+                'status' => $statusDatabase,
+                'denda' => $request->denda,
+                'bukti_kembali' => $namaFileBukti
+            ]);
+
+            // Log Aktivitas
+            \App\Models\ActivityLog::record('Validasi Pengembalian', "Menyelesaikan pesanan #{$rental->id}. Denda: Rp {$request->denda}. Kondisi: {$request->kondisi_kembali}");
+            
+            return back()->with('sukses', 'Sip! Pengembalian berhasil divalidasi dan foto bukti tersimpan.');
+        } 
+        
+        // LOGIKA TOLAK
+        else {
+            $rental->update(['status' => $statusDatabase]);
         }
 
-        // Simpan ke database dengan kata yang diizinkan ENUM
-        $rental->update(['status' => $statusDatabase]);
-
-        // Log activity
-        \App\Models\ActivityLog::record(
-            'Update Status Sewa',
-            "Mengubah pesanan ID #{$rental->id} (Kostum: {$costume->name}) menjadi status '{$statusDatabase}'."
-        );
-
-        return back()->with('sukses', 'Sip! Status pesanan diperbarui dan stok gudang otomatis disesuaikan.');
+        return back()->with('sukses', 'Status pesanan berhasil diperbarui.');
     }
 
     // 5. (Khusus Pelanggan) Menampilkan riwayat pesanan miliknya sendiri

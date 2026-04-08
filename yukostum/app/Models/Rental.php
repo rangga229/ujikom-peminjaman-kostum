@@ -8,7 +8,7 @@ class Rental extends Model
 {
     // Mengizinkan data ini diisi dari website
     protected $fillable = [
-        'user_id', 'costume_id', 'borrow_date', 'return_date', 'status'
+        'user_id', 'costume_id', 'borrow_date', 'return_date', 'status', 'denda', 'bukti_kembali'
     ];
 
     // Relasi: Peminjaman ini milik Kostum apa? (Agar nanti namanya bisa dipanggil)
