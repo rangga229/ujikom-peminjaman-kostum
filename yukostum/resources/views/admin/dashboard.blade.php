@@ -12,9 +12,6 @@
     <div class="col-md-4 mb-4">
         <div class="card shadow-sm border-0 bg-primary text-white h-100 rounded-4">
             <div class="card-body p-4 d-flex align-items-center">
-                <div class="me-3">
-                    <span style="font-size: 3rem;">🛒</span>
-                </div>
                 <div>
                     <h6 class="text-uppercase fw-bold mb-1 opacity-75">Transaksi Bulan Ini</h6>
                     <h2 class="fw-bold mb-0">{{ $totalTransaksi }} <span class="fs-6 fw-normal">Pesanan</span></h2>
@@ -26,9 +23,6 @@
     <div class="col-md-4 mb-4">
         <div class="card shadow-sm border-0 bg-success text-white h-100 rounded-4">
             <div class="card-body p-4 d-flex align-items-center">
-                <div class="me-3">
-                    <span style="font-size: 3rem;">🔥</span>
-                </div>
                 <div>
                     <h6 class="text-uppercase fw-bold mb-1 opacity-75">Paling Laris Bulan Ini</h6>
                     <h4 class="fw-bold mb-1 text-truncate" style="max-width: 200px;" title="{{ $kostumTerlaris }}">{{ $kostumTerlaris }}</h4>
@@ -41,9 +35,6 @@
     <div class="col-md-4 mb-4">
         <div class="card shadow-sm border-0 bg-warning text-dark h-100 rounded-4">
             <div class="card-body p-4 d-flex align-items-center">
-                <div class="me-3">
-                    <span style="font-size: 3rem;">📦</span>
-                </div>
                 <div>
                     <h6 class="text-uppercase fw-bold mb-1 opacity-75">Total Stok Tersedia</h6>
                     <h2 class="fw-bold mb-0">{{ $totalStok }} <span class="fs-6 fw-normal">Pcs</span></h2>

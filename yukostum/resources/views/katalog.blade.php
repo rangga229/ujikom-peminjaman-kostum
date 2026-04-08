@@ -41,13 +41,13 @@
                     <div class="card-body bg-white">
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item d-flex justify-content-between px-0">
-                                <span>📏 Ukuran</span> <strong>{{ $kostum->size }}</strong>
+                                <span> Ukuran</span> <strong>{{ $kostum->size }}</strong>
                             </li>
                             <li class="list-group-item d-flex justify-content-between px-0">
-                                <span>🎨 Warna</span> <strong>{{ $kostum->color }}</strong>
+                                <span> Warna</span> <strong>{{ $kostum->color }}</strong>
                             </li>
                             <li class="list-group-item d-flex justify-content-between px-0">
-                                <span>📦 Tersisa</span>
+                                <span> Tersisa</span>
                                 <span class="badge {{ $kostum->stock > 0 ? 'bg-success' : 'bg-danger' }} rounded-pill fs-6">
                                     {{ $kostum->stock > 0 ? $kostum->stock . ' Pcs' : 'Habis' }}
                                 </span>
@@ -64,7 +64,7 @@
                     <div class="card-footer bg-white border-0 p-3">
                         <a href="/katalog/{{ $kostum->id }}"
                             class="btn btn-outline-primary btn-lg w-100 fw-bold text-center">
-                            🔍 LIHAT DETAIL
+                             LIHAT DETAIL
                         </a>
                     </div>
 
@@ -72,7 +72,7 @@
             </div>
         @empty
             <div class="col-12 text-center py-5">
-                <h4 class="text-muted">Yah, belum ada kostum yang tersedia saat ini 😢</h4>
+                <h4 class="text-muted">Yah, belum ada kostum yang tersedia saat ini </h4>
             </div>
         @endforelse
     </div>

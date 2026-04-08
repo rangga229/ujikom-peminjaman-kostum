@@ -34,6 +34,8 @@
                     <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold rounded-pill">
                         MASUK SEKARANG
                     </button>
+
+                    <p>Belum punya akun? <a href="/register" class="text-primary fw-bold text-decoration-none">Daftar di sini</a></p>
                 </form>
                 
             </div>

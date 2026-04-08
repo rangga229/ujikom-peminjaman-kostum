@@ -14,19 +14,22 @@ use App\Http\Controllers\DashboardController;
 |--------------------------------------------------------------------------
 */
 
-// Jika buka website awal, langsung arahkan ke Katalog
+// Jika buka website awal, langsung arahkan ke Login
 Route::get('/', function () {
     return redirect('/login');
 });
 
 // Halaman Katalog (Etalase Toko)
 Route::get('/katalog', [KatalogController::class, 'index']);
-
 Route::get('/katalog/{id}', [KatalogController::class, 'show']);
 
 // Halaman Login & Prosesnya
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'prosesLogin']);
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'prosesLogin'])->middleware('guest');
+
+// Halaman Register
+Route::get('/register', [App\Http\Controllers\RegisterController::class, 'create'])->middleware('guest');
+Route::post('/register', [App\Http\Controllers\RegisterController::class, 'store'])->middleware('guest');
 
 
 /*
@@ -35,9 +38,6 @@ Route::post('/login', [AuthController::class, 'prosesLogin']);
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
-
-    // dialihkan ke katalog setelah login
-    Route::get('/katalog', [KatalogController::class, 'index']);
 
     // Proses Logout
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -54,7 +54,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/sewa/{id}', [RentalController::class, 'updateStatus']);
 
     // --- FITUR ADMIN CRUD User
-    // Rute CRUD Pengguna (Admin)
     Route::get('/admin/users', [UserController::class, 'index']);
     Route::post('/admin/users', [UserController::class, 'store']);
     Route::get('/admin/users/{id}/edit', [UserController::class, 'edit']);
@@ -62,10 +61,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
 
     // --- FITUR PELANGGAN (Menyewa Baju) ---
-    Route::get('/sewa/{id}', [RentalController::class, 'create']);
-    Route::post('/sewa/{id}', [RentalController::class, 'store']);
-
-    // --- FITUR PELANGGAN (Sewa Baju) ---
     Route::get('/sewa/{id}', [RentalController::class, 'create']);
     Route::post('/sewa/{id}', [RentalController::class, 'store']);
 

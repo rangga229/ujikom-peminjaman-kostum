@@ -22,7 +22,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a class="navbar-brand fw-bold text-warning" href="/katalog">🎭 Yukostum</a>
+                <a class="navbar-brand fw-bold text-warning" href="/katalog"> Yukostum</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -33,23 +33,21 @@
 
                         @auth
                             @if (Auth::user()->role == 'admin')
-                                <li class="nav-item"><a class="nav-link" href="/dashboard">📊 Dashboard</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/admin/kostum">👕 Kelola Kostum</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/admin/sewa">🛒 Pesanan Sewa</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/admin/users">👥 Kelola Pengguna</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/admin/logs">🕵️‍♂️ Log Sistem</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/dashboard"> Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/admin/kostum"> Kelola Kostum</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/admin/sewa"> Pesanan Sewa</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/admin/users"> Kelola Pengguna</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/admin/logs"> Log Sistem</a></li>
                             @elseif(Auth::user()->role == 'petugas')
-                                <li class="nav-item"><a class="nav-link" href="/dashboard">📊 Dashboard</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/admin/kostum">👕 Kelola Kostum</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/admin/sewa">🛒 Pesanan Sewa</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/admin/kostum">Kelola Kostum</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/admin/sewa">Pesanan Sewa</a></li>
                             @elseif(Auth::user()->role == 'pelanggan')
-                                <li class="nav-item"><a class="nav-link" href="/riwayat">📝 Riwayat Sewa Saya</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/riwayat">Riwayat Sewa Saya</a></li>
                             @endif
                         @endauth
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="/katalog">Katalog Kostum</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/katalog">Katalog Kostum</a></li>
 
                     </ul>
 
@@ -66,7 +64,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle fw-bold text-white" href="#" id="navbarDropdown"
                                     role="button" data-bs-toggle="dropdown">
-                                    👋 Halo, {{ Auth::user()->name }}
+                                    Halo, {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end shadow border-0">
                                     <li>
@@ -88,7 +86,7 @@
 
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show shadow-sm fw-bold" role="alert">
-                🚨 {{ session('error') }}
+                 {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif

@@ -5,7 +5,7 @@
         <div class="col-md-10">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between align-items-center py-3">
-                    <span class="fs-5">🛍️ Riwayat Sewa Saya</span>
+                    <span class="fs-5"> Riwayat Sewa Saya</span>
                     <a href="/katalog" class="btn btn-primary btn-sm fw-bold">Sewa Baju Lain</a>
                 </div>
 

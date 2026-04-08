@@ -88,7 +88,7 @@
                                     </button>
                                 @else
                                     <a href="/sewa/{{ $costume->id }}" class="btn btn-primary w-100 fw-bold mt-3 py-2">
-                                        📅 Pilih Tanggal Sewa
+                                         Pilih Tanggal Sewa
                                     </a>
                                 @endif
                                 <a href="/katalog" class="btn btn-light w-100 mt-2 text-muted fw-bold">Kembali ke

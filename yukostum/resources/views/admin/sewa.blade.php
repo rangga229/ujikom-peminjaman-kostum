@@ -32,7 +32,11 @@
                                     <td class="fw-bold">#ORD-00{{ $sewa->id }}</td>
                                     <td class="text-start">
                                         <strong>{{ $sewa->user->name ?? 'User Dihapus' }}</strong><br>
-                                        <small class="text-muted">{{ $sewa->user->email ?? '-' }}</small>
+                                        <small class="text-muted">✉️ {{ $sewa->user->email ?? '-' }}</small><br>
+                                        <small class="text-success fw-bold">📞
+                                            {{ $sewa->user->phone ?? 'Belum ada No. HP' }}</small><br>
+                                        <small class="text-muted" style="font-size: 0.75rem;">📍
+                                            {{ Str::limit($sewa->user->address, 30) ?? 'Alamat tidak diketahui' }}</small>
                                     </td>
                                     <td class="text-start text-primary fw-bold">{{ $sewa->costume->name ?? 'Baju Dihapus' }}
                                     </td>

@@ -5,12 +5,12 @@
         <div class="col-md-6">
 
             <a href="/katalog" class="btn btn-light mb-3 shadow-sm fw-bold text-muted">
-                ⬅️ Batal & Kembali
+                Kembali
             </a>
 
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-header bg-primary text-white fw-bold py-3 fs-5 rounded-top-4">
-                    📅 Tentukan Tanggal Sewa
+                     Tentukan Tanggal Sewa
                 </div>
                 <div class="card-body p-4">
 
