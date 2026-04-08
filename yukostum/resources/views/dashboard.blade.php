@@ -85,7 +85,7 @@
         <div class="col-lg-4 mb-4">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-                    <h5 class="fw-bold text-dark mb-0">📍 Data Pengiriman Saya</h5>
+                    <h5 class="fw-bold text-dark mb-0"> Data Pengiriman Saya</h5>
                 </div>
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center mb-3">
@@ -101,18 +101,18 @@
                     <hr>
 
                     <div class="mb-3">
-                        <small class="text-muted fw-bold d-block">📞 Nomor HP / WhatsApp</small>
+                        <small class="text-muted fw-bold d-block"> Nomor HP / WhatsApp</small>
                         <span class="fs-6">{{ Auth::user()->phone ?? 'Belum diatur' }}</span>
                     </div>
 
                     <div class="mb-4">
-                        <small class="text-muted fw-bold d-block">🏠 Alamat Lengkap</small>
+                        <small class="text-muted fw-bold d-block"> Alamat Lengkap</small>
                         <span class="fs-6">{{ Auth::user()->address ?? 'Belum diatur' }}</span>
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button class="btn btn-outline-secondary fw-bold" disabled>⚙️ Edit Profil (Segera Hadir)</button>
-                        <a href="/riwayat" class="btn btn-outline-primary fw-bold">📜 Lihat Semua Riwayat</a>
+                        <a href="/profil" class="btn btn-outline-secondary fw-bold"> Edit Profil</a>
+                        <a href="/riwayat" class="btn btn-outline-primary fw-bold"> Riwayat</a>
                     </div>
                 </div>
             </div>
