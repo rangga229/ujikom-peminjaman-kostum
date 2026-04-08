@@ -5,9 +5,12 @@
         <div class="col-12">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white fw-bold d-flex justify-content-between align-items-center">
-                    <span>📋 Laporan Pesanan Sewa Masuk</span>
-                    <a href="/admin/kostum" class="btn btn-light btn-sm fw-bold">← Kembali ke Gudang</a>
-                </div>
+    <span>📋 Laporan Pesanan Sewa Masuk</span>
+    <div>
+        <a href="/admin/laporan" target="_blank" class="btn btn-warning btn-sm fw-bold me-2 text-dark">🖨️ Cetak Laporan</a>
+        <a href="/admin/kostum" class="btn btn-light btn-sm fw-bold">← Kembali ke Gudang</a>
+    </div>
+</div>
 
                 <div class="card-body p-0 table-responsive">
                     @if (session('sukses'))

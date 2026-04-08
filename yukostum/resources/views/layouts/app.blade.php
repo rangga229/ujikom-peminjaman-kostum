@@ -43,6 +43,7 @@
                                 <li class="nav-item"><a class="nav-link" href="/admin/kostum">Kelola Kostum</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/admin/sewa">Pesanan Sewa</a></li>
                             @elseif(Auth::user()->role == 'pelanggan')
+                                <li class="nav-item"><a class="nav-link fw-bold text-info" href="/dashboard">Dashboard</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/riwayat">Riwayat Sewa Saya</a></li>
                             @endif
                         @endauth

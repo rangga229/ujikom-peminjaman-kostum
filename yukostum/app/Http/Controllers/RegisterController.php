@@ -51,7 +51,7 @@ class RegisterController extends Controller
         // 4. Langsung Login-kan otomatis
         Auth::login($user);
 
-        // 5. Lempar ke katalog
-        return redirect('/katalog')->with('sukses', 'Selamat datang di Yukostum! Akun Anda berhasil dibuat.');
+        // 5. Lempar ke dashboard
+        return redirect('/dashboard')->with('sukses', 'Selamat datang di Yukostum! Akun Anda berhasil dibuat.');
     }
 }

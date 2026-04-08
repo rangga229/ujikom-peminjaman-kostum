@@ -162,4 +162,21 @@ class RentalController extends Controller
 
         return view('riwayat', compact('rentals'));
     }
+
+    // 6. (Khusus Admin/Petugas) Mencetak Laporan Pemasukan
+    public function cetakLaporan()
+    {
+        // Ambil HANYA pesanan yang sudah beres (dikembalikan)
+        $rentals = Rental::with(['user', 'costume'])
+                    ->where('status', 'dikembalikan')
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
+
+        // Kalkulasi otomatis untuk pembukuan
+        $totalSewa = $rentals->sum('total_price');
+        $totalDenda = $rentals->sum('denda');
+        $grandTotal = $totalSewa + $totalDenda;
+
+        return view('admin.laporan', compact('rentals', 'totalSewa', 'totalDenda', 'grandTotal'));
+    }
 }

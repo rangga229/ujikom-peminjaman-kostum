@@ -13,11 +13,33 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
 
-        if (Auth::user()->role == 'pelanggan') {
-            return redirect('/katalog')->with('error', 'Akses ditolak! Anda tidak memiliki izin untuk masuk.');
+        // ========================================================
+        // 🛣️ CABANG 1: JIKA YANG LOGIN ADALAH PELANGGAN
+        // ========================================================
+        if ($user->role == 'pelanggan') {
+            
+            // 1. Ambil angka ringkasan
+            $menunggu = Rental::where('user_id', $user->id)->where('status', 'pending')->count();
+            $sedangDisewa = Rental::where('user_id', $user->id)->where('status', 'disetujui')->count();
+            $selesai = Rental::where('user_id', $user->id)->whereIn('status', ['dikembalikan', 'selesai'])->count();
+
+            // 2. Ambil 1 pesanan terakhir yang sedang AKTIF
+            $pesananAktif = Rental::with('costume')
+                            ->where('user_id', $user->id)
+                            ->whereIn('status', ['pending', 'disetujui'])
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+
+            // Kembalikan ke tampilan pelanggan (resources/views/dashboard.blade.php)
+            return view('dashboard', compact('menunggu', 'sedangDisewa', 'selesai', 'pesananAktif'));
         }
 
+        // ========================================================
+        // 🛣️ CABANG 2: JIKA YANG LOGIN ADALAH ADMIN ATAU PETUGAS
+        // ========================================================
+        
         // 1. Ambil data bulan dan tahun saat ini
         $bulanIni = Carbon::now()->month;
         $tahunIni = Carbon::now()->year;
@@ -31,7 +53,6 @@ class DashboardController extends Controller
             ->count();
 
         // 4. Cari Kostum Paling Laris Bulan Ini
-        // Logika: Kelompokkan transaksi berdasarkan ID kostum, hitung yang paling banyak muncul
         $kostumTerlarisData = Rental::select('costume_id', DB::raw('count(*) as total_sewa'))
             ->whereMonth('created_at', $bulanIni)
             ->whereYear('created_at', $tahunIni)
@@ -39,9 +60,7 @@ class DashboardController extends Controller
             ->orderBy('total_sewa', 'desc')
             ->first();
 
-        // Cek apakah ada transaksi bulan ini, jika ada ambil nama kostumnya
         if ($kostumTerlarisData) {
-            // Mencari nama kostum berdasarkan costume_id yang paling banyak disewa
             $kostumTerlaris = Costume::find($kostumTerlarisData->costume_id)->name;
             $jumlahDisewa = $kostumTerlarisData->total_sewa;
         } else {
@@ -49,7 +68,7 @@ class DashboardController extends Controller
             $jumlahDisewa = 0;
         }
 
-        // 5. Kirim semua data tersebut ke halaman tampilan (View)
+        // Kembalikan ke tampilan admin (resources/views/admin/dashboard.blade.php)
         return view('admin.dashboard', compact('totalStok', 'totalTransaksi', 'kostumTerlaris', 'jumlahDisewa'));
     }
 }

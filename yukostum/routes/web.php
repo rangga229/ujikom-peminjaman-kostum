@@ -59,10 +59,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/users/{id}/edit', [UserController::class, 'edit']);
     Route::put('/admin/users/{id}', [UserController::class, 'update']);
     Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
+    Route::get('/admin/laporan', [App\Http\Controllers\RentalController::class, 'cetakLaporan']);
 
     // --- FITUR PELANGGAN (Menyewa Baju) ---
     Route::get('/sewa/{id}', [RentalController::class, 'create']);
     Route::post('/sewa/{id}', [RentalController::class, 'store']);
+
 
     // FITUR ACTIVITY LOG
     Route::get('/admin/logs', [App\Http\Controllers\ActivityLogController::class, 'index']);
