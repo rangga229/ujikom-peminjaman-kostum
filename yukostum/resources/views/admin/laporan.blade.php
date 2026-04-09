@@ -19,7 +19,7 @@
     <div class="container-fluid">
         <div class="text-center border-bottom border-dark pb-3 mb-4">
             <h2 class="fw-bold mb-1">🎭 YUKOSTUM</h2>
-            <p class="mb-0">Jl. Contoh Alamat No. 123, Kota Semarang</p>
+            <p class="mb-0">Jl. Batalion Raider 400 , Kota Semarang</p>
             <h4 class="mt-3 fw-bold text-uppercase">Laporan Rekapitulasi Pendapatan</h4>
             <small>Dicetak pada: {{ \Carbon\Carbon::now()->format('d M Y, H:i') }} | Oleh: {{ Auth::user()->name }}</small>
         </div>

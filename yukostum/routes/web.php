@@ -64,6 +64,12 @@ Route::middleware(['auth'])->group(function () {
     // --- FITUR PELANGGAN (Menyewa Baju) ---
     Route::get('/sewa/{id}', [RentalController::class, 'create']);
     Route::post('/sewa/{id}', [RentalController::class, 'store']);
+    
+    // --- FITUR ALUR PEMBAYARAN PENGGUNA ---
+    Route::get('/sewa/bayar/{id}', [RentalController::class, 'halamanBayar']);
+    Route::post('/sewa/bayar/{id}', [RentalController::class, 'prosesBayar']);
+    Route::get('/sewa/konfirmasi/{id}', [RentalController::class, 'halamanKonfirmasi']);
+    Route::post('/sewa/ajukan/{id}', [RentalController::class, 'ajukanPesanan']);
 
     // --- FITUR PROFIL PENGGUNA ---
     Route::get('/profil', [App\Http\Controllers\ProfileController::class, 'edit']);

@@ -17,7 +17,7 @@ class RentalController extends Controller
         return view('sewa', compact('costume'));
     }
 
-    // 2. Memproses pesanan masuk ke database (🌟 SUDAH DIUPDATE)
+    // 2. Memproses pesanan masuk ke database 
     public function store(Request $request, $id)
     {
         // Validasi agar tanggal kembali tidak lebih cepat dari tanggal pinjam
@@ -52,18 +52,57 @@ class RentalController extends Controller
         // Rumus: (Durasi Hari) x (Harga Kostum)
         $totalBayar = $durasiHari * $costume->price;
 
-        // Simpan ke database
-        Rental::create([
-            'user_id' => Auth::id(), // ID Pelanggan yang sedang login
-            'costume_id' => $id, // ID Baju yang dipinjam
+        // 🌟 PERUBAHAN 1: Masukkan ke variabel $rental agar kita bisa mengambil ID-nya nanti
+        $rental = Rental::create([
+            'user_id' => Auth::id(), 
+            'costume_id' => $id, 
             'borrow_date' => $request->borrow_date,
             'return_date' => $request->return_date,
-            'total_price' => $totalBayar, // 🌟 TAMBAHAN: Hasil perkalian masuk ke database
-            'status' => 'pending', // Status awal selalu pending
+            'total_price' => $totalBayar, 
+            'status' => 'belum_bayar', // 🌟 PERUBAHAN 2: Status awal diubah jadi 'belum_bayar'
         ]);
 
-        // Kembalikan ke katalog dengan pesan sukses dan info harga
-        return redirect('/katalog')->with('sukses', 'Hore! Permintaan sewa berhasil dikirim. Total bayar: Rp ' . number_format($totalBayar, 0, ',', '.') . '. Silakan tunggu persetujuan Admin.');
+        // 🌟 PERUBAHAN 3: Lempar ke halaman pembayaran membawa ID transaksi tersebut
+        return redirect('/sewa/bayar/' . $rental->id);
+    }
+
+    // 1. Menampilkan Halaman Pembayaran & Ringkasan
+    public function halamanBayar($id)
+    {
+        $rental = Rental::with('costume')->findOrFail($id);
+        
+        // Hitung durasi hari
+        $borrow = Carbon::parse($rental->borrow_date);
+        $return = Carbon::parse($rental->return_date);
+        $durasi = $borrow->diffInDays($return) ?: 1; // Minimal 1 hari
+
+        return view('bayar', compact('rental', 'durasi'));
+    }
+
+    // 2. Memproses Tombol "Bayar Sekarang"
+    public function prosesBayar(Request $request, $id)
+    {
+        // Di sini kamu bisa menyimpan metode pembayaran ke database jika mau
+        // Untuk sekarang, kita langsung arahkan ke halaman konfirmasi
+        return redirect('/sewa/konfirmasi/' . $id);
+    }
+
+    // 3. Menampilkan Halaman Konfirmasi (Nomor Pesanan)
+    public function halamanKonfirmasi($id)
+    {
+        $rental = Rental::with('costume')->findOrFail($id);
+        return view('konfirmasi', compact('rental'));
+    }
+
+    // 4. Memproses Tombol "Ajukan"
+    public function ajukanPesanan($id)
+    {
+        $rental = Rental::findOrFail($id);
+        
+        // Ubah status menjadi pending agar masuk ke antrean Admin
+        $rental->update(['status' => 'pending']); 
+        
+        return redirect('/dashboard')->with('sukses', 'Pesanan berhasil diajukan! Silakan tunggu persetujuan dari Admin.');
     }
 
     // 3. (Khusus Admin) Menampilkan daftar semua pesanan
