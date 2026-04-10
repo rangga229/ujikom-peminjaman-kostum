@@ -58,7 +58,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 mb-4">
                 <div class="alert alert-success fw-bold text-center shadow-sm border-0 rounded-pill">
-                    🎉 {{ session('sukses') }}
+                     {{ session('sukses') }}
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@
 
                         @if ($kostum->condition == 'diperbaiki')
                             <div class="alert alert-warning py-1 px-2 text-center mb-3 border-0" style="font-size: 12px;">
-                                ⚠️ Sedang diperbaiki
+                                 Sedang diperbaiki
                             </div>
                         @endif
 

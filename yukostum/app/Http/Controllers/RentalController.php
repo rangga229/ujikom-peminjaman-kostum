@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Costume;
 use App\Models\Rental;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon; // 🌟 TAMBAHAN: Pustaka untuk menghitung selisih tanggal
+use Carbon\Carbon; 
 
 class RentalController extends Controller
 {
@@ -20,7 +20,6 @@ class RentalController extends Controller
     // 2. Memproses pesanan masuk ke database 
     public function store(Request $request, $id)
     {
-        // Validasi agar tanggal kembali tidak lebih cepat dari tanggal pinjam
         $request->validate([
             'borrow_date' => 'required|date|after_or_equal:today',
             'return_date' => 'required|date|after_or_equal:borrow_date',
@@ -28,41 +27,37 @@ class RentalController extends Controller
 
         $costume = Costume::findOrFail($id);
 
-        // 🚨 PROTEKSI 1: Cek Kondisi Baju (Rusak / Diperbaiki)
         $kondisi = strtolower($costume->condition);
         if ($kondisi == 'rusak' || $kondisi == 'diperbaiki') {
             return back()->with('error', 'Transaksi dibatalkan. Kostum sedang dalam kondisi ' . $costume->condition . ' dan tidak bisa disewa.');
         }
 
-        // 🚨 PROTEKSI 2: Cek Ketersediaan Stok
         if ($costume->stock < 1) {
             return back()->with('error', 'Maaf, stok kostum ini sedang kosong.');
         }
 
-        // 🧮 LOGIKA KALKULATOR: Hitung Durasi dan Total Bayar
         $tanggalPinjam = Carbon::parse($request->borrow_date);
         $tanggalKembali = Carbon::parse($request->return_date);
 
-        // Menghitung selisih hari. Jika pinjam dan kembali di hari yang sama, dihitung minimal 1 hari.
         $durasiHari = $tanggalPinjam->diffInDays($tanggalKembali);
         if ($durasiHari == 0) {
             $durasiHari = 1;
         }
 
-        // Rumus: (Durasi Hari) x (Harga Kostum)
         $totalBayar = $durasiHari * $costume->price;
 
-        // 🌟 PERUBAHAN 1: Masukkan ke variabel $rental agar kita bisa mengambil ID-nya nanti
         $rental = Rental::create([
             'user_id' => Auth::id(), 
             'costume_id' => $id, 
             'borrow_date' => $request->borrow_date,
             'return_date' => $request->return_date,
             'total_price' => $totalBayar, 
-            'status' => 'belum_bayar', // 🌟 PERUBAHAN 2: Status awal diubah jadi 'belum_bayar'
+            'status' => 'belum_bayar', 
         ]);
 
-        // 🌟 PERUBAHAN 3: Lempar ke halaman pembayaran membawa ID transaksi tersebut
+        //  LOG AKTIVITAS: Pelanggan mulai membuat pesanan
+        \App\Models\ActivityLog::record('Mulai Pesanan Baru', "Pelanggan membuat draf pesanan #ORD-00{$rental->id} (Status: Belum Bayar).");
+
         return redirect('/sewa/bayar/' . $rental->id);
     }
 
@@ -71,10 +66,9 @@ class RentalController extends Controller
     {
         $rental = Rental::with('costume')->findOrFail($id);
         
-        // Hitung durasi hari
         $borrow = Carbon::parse($rental->borrow_date);
         $return = Carbon::parse($rental->return_date);
-        $durasi = $borrow->diffInDays($return) ?: 1; // Minimal 1 hari
+        $durasi = $borrow->diffInDays($return) ?: 1; 
 
         return view('bayar', compact('rental', 'durasi'));
     }
@@ -82,8 +76,9 @@ class RentalController extends Controller
     // 2. Memproses Tombol "Bayar Sekarang"
     public function prosesBayar(Request $request, $id)
     {
-        // Di sini kamu bisa menyimpan metode pembayaran ke database jika mau
-        // Untuk sekarang, kita langsung arahkan ke halaman konfirmasi
+        //  LOG AKTIVITAS: Pelanggan masuk ke tahap pembayaran
+        \App\Models\ActivityLog::record('Proses Pembayaran', "Pelanggan memproses pembayaran untuk pesanan #ORD-00{$id}.");
+        
         return redirect('/sewa/konfirmasi/' . $id);
     }
 
@@ -98,17 +93,17 @@ class RentalController extends Controller
     public function ajukanPesanan($id)
     {
         $rental = Rental::findOrFail($id);
-        
-        // Ubah status menjadi pending agar masuk ke antrean Admin
         $rental->update(['status' => 'pending']); 
         
+        //  LOG AKTIVITAS: Pelanggan resmi mengajukan pesanan
+        \App\Models\ActivityLog::record('Pesanan Diajukan', "Pesanan #ORD-00{$rental->id} diajukan dan sedang menunggu persetujuan Admin.");
+
         return redirect('/dashboard')->with('sukses', 'Pesanan berhasil diajukan! Silakan tunggu persetujuan dari Admin.');
     }
 
     // 3. (Khusus Admin) Menampilkan daftar semua pesanan
     public function indexAdmin()
     {
-        // Ambil data sewa, urutkan dari yang paling baru
         $rentals = Rental::with(['user', 'costume'])->orderBy('created_at', 'desc')->get();
         return view('admin.sewa', compact('rentals'));
     }
@@ -131,7 +126,7 @@ class RentalController extends Controller
             $statusDatabase = 'ditolak';
         }
 
-        // 📦 LOGIKA SAAT DISETUJUI (Kurangi Stok)
+        // 📦 LOGIKA SAAT DISETUJUI
         if ($rental->status == 'pending' && $statusDatabase == 'disetujui') {
             if ($costume->stock > 0) {
                 $costume->decrement('stock'); 
@@ -139,19 +134,20 @@ class RentalController extends Controller
                 return back()->with('error', 'Gagal menyetujui pesanan. Stok baju habis.');
             }
             $rental->update(['status' => $statusDatabase]);
+
+            //  LOG AKTIVITAS: Pesanan Disetujui
+            \App\Models\ActivityLog::record('Setujui Pesanan', "Pesanan #ORD-00{$rental->id} disetujui. Stok kostum '{$costume->name}' otomatis dikurangi.");
         }
         
-        // 📦 LOGIKA SAAT DIKEMBALIKAN (Upload Foto, Denda, & Tambah Stok)
+        // 📦 LOGIKA SAAT DIKEMBALIKAN 
         elseif ($rental->status == 'disetujui' && $statusDatabase == 'dikembalikan') {
             
-            // 1. Validasi input file dan denda
             $request->validate([
                 'denda' => 'required|numeric|min:0',
                 'bukti_kembali' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'kondisi_kembali' => 'required|string'
             ]);
 
-            // 2. Proses Simpan Foto
             $namaFileBukti = null;
             if ($request->hasFile('bukti_kembali')) {
                 $file = $request->file('bukti_kembali');
@@ -159,25 +155,22 @@ class RentalController extends Controller
                 $file->move(public_path('images/bukti'), $namaFileBukti);
             }
 
-            // 3. Logika Pintar untuk Kostum
             if ($request->kondisi_kembali == 'rusak') {
-                $costume->update(['condition' => 'rusak']); // Otomatis tandai kostum rusak di katalog
+                $costume->update(['condition' => 'rusak']); 
             }
 
-            // Tambah stok kembali HANYA jika baju tidak hilang
             if ($request->kondisi_kembali != 'hilang') {
                 $costume->increment('stock'); 
             }
 
-            // 4. Simpan ke database
             $rental->update([
                 'status' => $statusDatabase,
                 'denda' => $request->denda,
                 'bukti_kembali' => $namaFileBukti
             ]);
 
-            // Log Aktivitas
-            \App\Models\ActivityLog::record('Validasi Pengembalian', "Menyelesaikan pesanan #{$rental->id}. Denda: Rp {$request->denda}. Kondisi: {$request->kondisi_kembali}");
+            //  LOG AKTIVITAS: Validasi Pengembalian
+            \App\Models\ActivityLog::record('Validasi Pengembalian', "Menyelesaikan pesanan #ORD-00{$rental->id}. Denda: Rp {$request->denda}. Kondisi: {$request->kondisi_kembali}");
             
             return back()->with('sukses', 'Sip! Pengembalian berhasil divalidasi dan foto bukti tersimpan.');
         } 
@@ -185,6 +178,11 @@ class RentalController extends Controller
         // LOGIKA TOLAK
         else {
             $rental->update(['status' => $statusDatabase]);
+
+            //  LOG AKTIVITAS: Pesanan Ditolak
+            if ($statusDatabase == 'ditolak') {
+                \App\Models\ActivityLog::record('Tolak Pesanan', "Pesanan #ORD-00{$rental->id} telah ditolak.");
+            }
         }
 
         return back()->with('sukses', 'Status pesanan berhasil diperbarui.');
@@ -193,7 +191,6 @@ class RentalController extends Controller
     // 5. (Khusus Pelanggan) Menampilkan riwayat pesanan miliknya sendiri
     public function indexPelanggan()
     {
-        // Cari pesanan yang user_id-nya sama dengan ID orang yang sedang login
         $rentals = Rental::with('costume')
             ->where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
@@ -205,16 +202,17 @@ class RentalController extends Controller
     // 6. (Khusus Admin/Petugas) Mencetak Laporan Pemasukan
     public function cetakLaporan()
     {
-        // Ambil HANYA pesanan yang sudah beres (dikembalikan)
         $rentals = Rental::with(['user', 'costume'])
                     ->where('status', 'dikembalikan')
                     ->orderBy('updated_at', 'desc')
                     ->get();
 
-        // Kalkulasi otomatis untuk pembukuan
         $totalSewa = $rentals->sum('total_price');
         $totalDenda = $rentals->sum('denda');
         $grandTotal = $totalSewa + $totalDenda;
+
+        //  LOG AKTIVITAS: Laporan Dicetak
+        \App\Models\ActivityLog::record('Cetak Laporan', "Mencetak laporan pendapatan total Rp " . number_format($grandTotal, 0, ',', '.'));
 
         return view('admin.laporan', compact('rentals', 'totalSewa', 'totalDenda', 'grandTotal'));
     }

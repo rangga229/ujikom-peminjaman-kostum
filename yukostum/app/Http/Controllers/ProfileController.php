@@ -40,10 +40,19 @@ class ProfileController extends Controller
         // Jika form password diisi, maka update password-nya juga
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
+            $infoTambahan = " dan mengganti kata sandi";
+        } else {
+            $infoTambahan = "";
         }
 
         // Simpan perubahan ke database
         $user->save();
+
+        //  LOG AKTIVITAS: Rekam perubahan profil pengguna
+        \App\Models\ActivityLog::record(
+            'Edit Profil Pribadi', 
+            "Pengguna '{$user->name}' (Peran: {$user->role}) telah memperbarui informasi profilnya{$infoTambahan}."
+        );
 
         return back()->with('sukses', 'Sip! Profil Anda berhasil diperbarui.');
     }

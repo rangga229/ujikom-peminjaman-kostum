@@ -12,7 +12,7 @@ class CostumeSeeder extends Seeder
         Costume::create([
             'name' => 'Cosplay Nezuko Kamado',
             'images' => [], 
-            'type' => 'Cosplay Anime',
+            'type' => 'Cosplay',
             'size' => 'M',
             'color' => 'Pink & Hitam',
             'material' => 'Polyester',
@@ -24,7 +24,7 @@ class CostumeSeeder extends Seeder
         Costume::create([
             'name' => 'Baju Adat Jawa (Beskap Pria)',
             'images' => [], 
-            'type' => 'Baju Adat',
+            'type' => 'Pesta Umum',
             'size' => 'L',
             'color' => 'Hitam',
             'material' => 'Beludru',
@@ -36,7 +36,7 @@ class CostumeSeeder extends Seeder
         Costume::create([
             'name' => 'Gaun Pesta Mewah (Eropa)',
             'images' => [], 
-            'type' => 'Pakaian Formal',
+            'type' => 'Pernikahan',
             'size' => 'S',
             'color' => 'Merah Maroon',
             'material' => 'Sutra & Brokat',

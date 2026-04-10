@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Costume; // Memanggil model Costume
 
 class CostumeController extends Controller
@@ -45,6 +46,11 @@ class CostumeController extends Controller
             'condition' => $request->condition,
             'price' => $request->price // Menyimpan harga sewa per hari
         ]);
+
+            // 🛡️ PROTEKSI: Hanya Admin yang boleh
+        if (Auth::user()->role != 'admin') {
+            return back()->with('error', 'Akses Ditolak! Hanya Admin yang dapat menambah kostum.');
+        }
 
         return back()->with('sukses', 'Kostum dengan detail baru berhasil ditambahkan.');
     }
@@ -112,6 +118,11 @@ class CostumeController extends Controller
                     unlink($hapusPath);
                 }
             }
+        }
+
+          // 🛡️ PROTEKSI: Hanya Admin yang boleh
+        if (Auth::user()->role != 'admin') {
+            return back()->with('error', 'Akses Ditolak! Hanya Admin yang dapat menghapus kostum.');
         }
 
         // Setelah file fisiknya bersih, baru hapus catatan kostum dari database MySQL
