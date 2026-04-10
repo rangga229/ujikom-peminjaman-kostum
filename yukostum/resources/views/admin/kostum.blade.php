@@ -5,7 +5,7 @@
         <div class="col-md-5 mb-4">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white fw-bold">
-                    ➕ Tambah Kostum Baru
+                     Tambah Kostum Baru
                 </div>
                 <div class="card-body">
                     @if (session('sukses'))
@@ -101,7 +101,7 @@
         <div class="col-md-7">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-dark text-white fw-bold">
-                    📦 Daftar Kostum Tersedia
+                     Daftar Kostum Tersedia
                 </div>
                 <div class="card-body p-0 table-responsive">
                     <table class="table table-striped table-hover mb-0 align-middle">
@@ -123,8 +123,8 @@
                                     </td>
                                     <td>
                                         <small>
-                                            📏 {{ $kostum->size }} | 🎨 {{ $kostum->color }} <br>
-                                            🧵 {{ $kostum->material ?: '-' }}
+                                             {{ $kostum->size }} |  {{ $kostum->color }} <br>
+                                             {{ $kostum->material ?: '-' }}
                                         </small>
                                     </td>
                                     <td>{{ $kostum->stock }} Pcs</td>

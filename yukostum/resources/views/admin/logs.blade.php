@@ -3,7 +3,7 @@
 @section('content')
 <div class="row mb-4">
     <div class="col-12">
-        <h2 class="fw-bold text-primary">🕵️‍♂️ Log Aktivitas Sistem</h2>
+        <h2 class="fw-bold text-primary"> Log Aktivitas Sistem</h2>
         <p class="text-muted">Pantau semua pergerakan dan perubahan data di dalam sistem Yukostum.</p>
     </div>
 </div>

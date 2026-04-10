@@ -5,7 +5,7 @@
     <div class="col-md-6">
         <div class="card shadow-sm border-0">
             <div class="card-header bg-warning text-dark fw-bold fs-5">
-                ✏️ Edit Data Pengguna
+                 Edit Data Pengguna
             </div>
             <div class="card-body p-4">
                 

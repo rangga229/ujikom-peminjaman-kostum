@@ -10,7 +10,7 @@ class ActivityLogController extends Controller
 {
     public function index()
     {
-        // 🚨 SATPAM: Pastikan HANYA Admin yang bisa melihat CCTV ini
+        //  SATPAM: Pastikan HANYA Admin yang bisa melihat CCTV ini
         if (Auth::user()->role !== 'admin') {
             return redirect('/dashboard')->with('error', 'Akses ditolak! Hanya Admin Utama yang bisa melihat Log Aktivitas.');
         }

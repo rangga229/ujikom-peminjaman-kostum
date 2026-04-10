@@ -6,13 +6,13 @@
         <div class="col-lg-8">
             
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold text-dark mb-0">⚙️ Pengaturan Profil</h3>
+                <h3 class="fw-bold text-dark mb-0"> Pengaturan Profil</h3>
                 <a href="/dashboard" class="btn btn-light fw-bold shadow-sm">← Kembali ke Dashboard</a>
             </div>
 
             @if(session('sukses'))
                 <div class="alert alert-success fw-bold shadow-sm">
-                    ✅ {{ session('sukses') }}
+                     {{ session('sukses') }}
                 </div>
             @endif
 
@@ -76,7 +76,7 @@
 
                         <div class="d-grid mt-2">
                             <button type="submit" class="btn btn-primary btn-lg fw-bold rounded-3 shadow-sm">
-                                💾 Simpan Perubahan Profil
+                                 Simpan Perubahan Profil
                             </button>
                         </div>
                     </form>

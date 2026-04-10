@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="alert alert-warning border-0 rounded-3 text-start small mb-4">
-                        <strong class="text-dark d-block mb-1">⚠️ Langkah Terakhir!</strong>
+                        <strong class="text-dark d-block mb-1"> Langkah Terakhir!</strong>
                         Tekan tombol <strong>"Ajukan Pesanan"</strong> di bawah ini untuk mengirimkan pesanan Anda ke Admin. Kostum Anda akan segera disiapkan!
                     </div>
 
