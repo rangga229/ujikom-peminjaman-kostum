@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan Pemasukan Yukostum</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet">
     <style>
         /* CSS Khusus untuk merapikan hasil Print di kertas */
         @media print {
@@ -18,7 +19,7 @@
 
     <div class="container-fluid">
         <div class="text-center border-bottom border-dark pb-3 mb-4">
-            <h2 class="fw-bold mb-1">🎭 YUKOSTUM</h2>
+            <h2 class="fw-bold mb-1"> YUKOSTUM</h2>
             <p class="mb-0">Jl. Batalion Raider 400 , Kota Semarang</p>
             <h4 class="mt-3 fw-bold text-uppercase">Laporan Rekapitulasi Pendapatan</h4>
             <small>Dicetak pada: {{ \Carbon\Carbon::now()->format('d M Y, H:i') }} | Oleh: {{ Auth::user()->name }}</small>
@@ -70,6 +71,8 @@
             <a href="/admin/sewa" class="btn btn-outline-secondary btn-lg ms-2">Kembali</a>
         </div>
     </div>
+
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
     <script>
         window.onload = function() {

@@ -3,7 +3,7 @@
 @section('content')
 <div class="row mb-4">
     <div class="col-12">
-        <h2 class="fw-bold text-primary">👥 Manajemen Pengguna</h2>
+        <h2 class="fw-bold text-primary"> Manajemen Pengguna</h2>
         <p class="text-muted">Kelola akun Admin, Petugas, dan Pelanggan di sistem Yukostum.</p>
     </div>
 </div>
@@ -48,12 +48,12 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <a href="/admin/users/{{ $u->id }}/edit" class="btn btn-sm btn-outline-primary">✏️ Edit</a>
+                                <a href="/admin/users/{{ $u->id }}/edit" class="btn btn-sm btn-outline-primary"> Edit</a>
                                 
                                 <form action="/admin/users/{{ $u->id }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus akun {{ $u->name }} permanen?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" {{ Auth::id() == $u->id ? 'disabled' : '' }}>🗑️ Hapus</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" {{ Auth::id() == $u->id ? 'disabled' : '' }}> Hapus</button>
                                 </form>
                             </td>
                         </tr>
@@ -67,7 +67,7 @@
     <div class="col-md-4">
         <div class="card shadow-sm border-0">
             <div class="card-header bg-primary text-white fw-bold">
-                ➕ Tambah Pengguna Baru
+                 Tambah Pengguna Baru
             </div>
             <div class="card-body">
                 <form action="/admin/users" method="POST">

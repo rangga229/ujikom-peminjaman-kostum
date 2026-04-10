@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yukostum - Sewa Kostum Terlengkap</title>
 
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+   <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     
-    <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet">
 
     <style>
         body {
@@ -76,7 +76,7 @@
             <div class="container">
                 
                 <a class="navbar-brand text-warning d-flex align-items-center gap-2" href="/katalog">
-                    <span class="fs-3">🎭</span> Yukostum
+                     Yukostum
                 </a>
 
                 <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -132,7 +132,7 @@
                                         <form action="/logout" method="POST">
                                             @csrf
                                             <button type="submit" class="dropdown-item rounded-3 text-danger fw-bold py-2 d-flex align-items-center gap-2">
-                                                <span>🚪</span> Keluar (Logout)
+                                                 Keluar (Logout)
                                             </button>
                                         </form>
                                     </li>
@@ -149,7 +149,7 @@
 
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show shadow-sm fw-bold rounded-4" role="alert">
-                 🚨 {{ session('error') }}
+                  {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
@@ -165,7 +165,7 @@
         </div>
     </footer>
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
 </body>
 

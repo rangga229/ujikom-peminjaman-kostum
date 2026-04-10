@@ -6,7 +6,7 @@
         
         @if($errors->any())
             <div class="alert alert-danger text-center fw-bold shadow-sm">
-                ⚠️ {{ $errors->first() }}
+                 {{ $errors->first() }}
             </div>
         @endif
 

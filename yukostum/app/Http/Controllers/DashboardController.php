@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         // ========================================================
-        // 🛣️ CABANG 1: JIKA YANG LOGIN ADALAH PELANGGAN
+        //  CABANG 1: JIKA YANG LOGIN ADALAH PELANGGAN
         // ========================================================
         if ($user->role == 'pelanggan') {
             
@@ -37,7 +37,7 @@ class DashboardController extends Controller
         }
 
         // ========================================================
-        // 🛣️ CABANG 2: JIKA YANG LOGIN ADALAH ADMIN ATAU PETUGAS
+        //  CABANG 2: JIKA YANG LOGIN ADALAH ADMIN ATAU PETUGAS
         // ========================================================
         
         // 1. Ambil data bulan dan tahun saat ini

@@ -47,7 +47,7 @@ class CostumeController extends Controller
             'price' => $request->price // Menyimpan harga sewa per hari
         ]);
 
-            // 🛡️ PROTEKSI: Hanya Admin yang boleh
+            //  PROTEKSI: Hanya Admin yang boleh
         if (Auth::user()->role != 'admin') {
             return back()->with('error', 'Akses Ditolak! Hanya Admin yang dapat menambah kostum.');
         }
@@ -120,7 +120,7 @@ class CostumeController extends Controller
             }
         }
 
-          // 🛡️ PROTEKSI: Hanya Admin yang boleh
+          //  PROTEKSI: Hanya Admin yang boleh
         if (Auth::user()->role != 'admin') {
             return back()->with('error', 'Akses Ditolak! Hanya Admin yang dapat menghapus kostum.');
         }

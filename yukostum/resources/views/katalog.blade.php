@@ -35,7 +35,7 @@
         <div class="col-lg-8 col-md-10">
             <form action="/katalog" method="GET" class="search-bar-custom d-flex flex-column flex-md-row gap-2 bg-white shadow-sm border rounded-pill p-2">
                 
-                <input type="text" name="cari" class="form-control border-0 bg-transparent px-3 py-2 fw-medium" placeholder="🔍 Cari nama kostum..." value="{{ request('cari') }}">
+                <input type="text" name="cari" class="form-control border-0 bg-transparent px-3 py-2 fw-medium" placeholder=" Cari nama kostum..." value="{{ request('cari') }}">
                 
                 <div class="vr d-none d-md-block mx-1 text-muted"></div>
                 
@@ -83,7 +83,7 @@
                             <img src="{{ asset('images/kostum/' . $kostum->images[0]) }}" class="w-100 h-100 object-fit-cover" alt="{{ $kostum->name }}">
                         @else
                             <div class="w-100 h-100 bg-light d-flex justify-content-center align-items-center">
-                                <span class="text-muted"><i class="fs-1 opacity-50">📷</i><br>Belum ada foto</span>
+                                <span class="text-muted"><i class="fs-1 opacity-50"></i><br>Belum ada foto</span>
                             </div>
                         @endif
                         
@@ -132,7 +132,7 @@
             </div>
         @empty
             <div class="col-12 text-center py-5">
-                <div class="display-1 text-muted opacity-25 mb-3">🔍</div>
+                <div class="display-1 text-muted opacity-25 mb-3"></div>
                 <h4 class="text-muted fw-bold">Yah, kostum yang kamu cari tidak ditemukan.</h4>
                 <p class="text-muted">Coba gunakan kata kunci atau tipe yang berbeda.</p>
                 <a href="/katalog" class="btn btn-outline-dark fw-bold mt-2 rounded-pill px-4">Tampilkan Semua Kostum</a>

@@ -57,25 +57,25 @@
                             <div class="row g-3 mb-4">
                                 <div class="col-6">
                                     <div class="bg-light p-3 rounded-4 h-100 border border-secondary-subtle">
-                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 11px;">📏 Ukuran</small>
+                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 11px;"> Ukuran</small>
                                         <span class="fw-bold fs-5 text-dark">{{ $costume->size }}</span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="bg-light p-3 rounded-4 h-100 border border-secondary-subtle">
-                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 11px;">🎨 Warna</small>
+                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 11px;"> Warna</small>
                                         <span class="fw-bold fs-5 text-dark text-truncate d-block" title="{{ $costume->color }}">{{ $costume->color }}</span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="bg-light p-3 rounded-4 h-100 border border-secondary-subtle">
-                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 11px;">🧵 Bahan</small>
+                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 11px;"> Bahan</small>
                                         <span class="fw-bold fs-5 text-dark">{{ $costume->material ?: '-' }}</span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="bg-light p-3 rounded-4 h-100 border border-secondary-subtle">
-                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 11px;">📦 Sisa Stok</small>
+                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 11px;"> Sisa Stok</small>
                                         @if($costume->stock > 0)
                                             <span class="fw-bold fs-5 text-success">{{ $costume->stock }} Pcs</span>
                                         @else
@@ -90,17 +90,17 @@
                             <div class="mt-auto pt-2">
                                 @if (strtolower($costume->condition) == 'rusak' || strtolower($costume->condition) == 'diperbaiki')
                                     <div class="alert alert-warning shadow-sm border-0 mt-3 rounded-4">
-                                        <h6 class="fw-bold mb-1 text-dark">⚠️ Sedang Dalam Perawatan</h6>
+                                        <h6 class="fw-bold mb-1 text-dark"> Sedang Dalam Perawatan</h6>
                                         <p class="mb-0 text-dark small">Maaf, kostum ini sedang <strong>{{ $costume->condition }}</strong> dan tidak dapat disewa untuk sementara waktu.
                                         </p>
                                     </div>
                                     <button class="btn btn-outline-secondary w-100 fw-bold mt-2 py-3 rounded-pill" disabled>
-                                        🚫 Kostum Tidak Tersedia
+                                         Kostum Tidak Tersedia
                                     </button>
                                 
                                 @elseif($costume->stock < 1)
                                     <div class="alert alert-danger shadow-sm border-0 mt-3 rounded-4">
-                                        <h6 class="fw-bold mb-1">❌ Stok Kosong</h6>
+                                        <h6 class="fw-bold mb-1"> Stok Kosong</h6>
                                         <p class="mb-0 text-dark small">Maaf, kostum ini sedang habis dipinjam oleh pelanggan lain.</p>
                                     </div>
                                     <button class="btn btn-outline-danger w-100 fw-bold mt-2 py-3 rounded-pill" disabled>
@@ -109,7 +109,7 @@
 
                                 @else
                                     <a href="/sewa/{{ $costume->id }}" class="btn btn-dark text-warning w-100 fw-bold mt-3 py-3 rounded-pill shadow-sm fs-5">
-                                        📅 Pilih Tanggal Sewa
+                                         Pilih Tanggal Sewa
                                     </a>
                                 @endif
                                 

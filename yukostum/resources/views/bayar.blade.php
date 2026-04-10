@@ -52,7 +52,6 @@
                     <div class="card-body p-4">
                         <div class="d-flex mb-3">
                             <div class="bg-light rounded-3 d-flex justify-content-center align-items-center me-3" style="width: 60px; height: 60px;">
-                                <span class="fs-3">🎭</span>
                             </div>
                             <div>
                                 <h6 class="fw-bold mb-1 text-dark">{{ $rental->costume->name }}</h6>

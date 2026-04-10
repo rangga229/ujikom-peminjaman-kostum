@@ -5,7 +5,7 @@
     <div class="col-md-8">
         <div class="card shadow-sm border-0">
             <div class="card-header bg-warning text-dark fw-bold">
-                ✏️ Edit Kostum: {{ $costume->name }}
+                 Edit Kostum: {{ $costume->name }}
             </div>
             <div class="card-body">
                 <form action="/admin/kostum/{{ $costume->id }}" method="POST">

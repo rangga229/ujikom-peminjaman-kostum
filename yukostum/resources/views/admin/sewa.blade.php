@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white fw-bold d-flex justify-content-between align-items-center">
-    <span>📋 Laporan Pesanan Sewa Masuk</span>
+    <span> Laporan Pesanan Sewa Masuk</span>
     <div>
         <a href="/admin/laporan" target="_blank" class="btn btn-warning btn-sm fw-bold me-2 text-dark">🖨️ Cetak Laporan</a>
         <a href="/admin/kostum" class="btn btn-light btn-sm fw-bold">← Kembali ke Gudang</a>
@@ -41,8 +41,8 @@
                                     <td class="text-start">
                                         <strong>{{ $sewa->user->name ?? 'User Dihapus' }}</strong><br>
                                         <small class="text-muted">✉️ {{ $sewa->user->email ?? '-' }}</small><br>
-                                        <small class="text-success fw-bold">📞 {{ $sewa->user->phone ?? 'Belum ada No. HP' }}</small><br>
-                                        <small class="text-muted" style="font-size: 0.75rem;">📍 {{ Str::limit($sewa->user->address ?? 'Alamat tidak diketahui', 30) }}</small>
+                                        <small class="text-success fw-bold"> {{ $sewa->user->phone ?? 'Belum ada No. HP' }}</small><br>
+                                        <small class="text-muted" style="font-size: 0.75rem;"> {{ Str::limit($sewa->user->address ?? 'Alamat tidak diketahui', 30) }}</small>
                                     </td>
                                     
                                     <td class="text-start text-primary fw-bold">{{ $sewa->costume->name ?? 'Baju Dihapus' }}</td>

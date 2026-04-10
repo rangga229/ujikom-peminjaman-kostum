@@ -5,7 +5,7 @@
         <div class="col-md-6">
 
             <a href="/katalog" class="btn btn-light mb-3 shadow-sm fw-bold text-muted">
-                Kembali
+                ⬅ Batal & Kembali
             </a>
 
             <div class="card shadow-lg border-0 rounded-4">
@@ -47,7 +47,7 @@
                         <input type="hidden" id="harga_kostum" value="{{ $costume->price }}">
 
                         <button type="submit" id="btn_submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm">
-                            🚀 Konfirmasi & Ajukan Sewa
+                             Konfirmasi & Ajukan Sewa
                         </button>
                     </form>
 
@@ -81,14 +81,13 @@
                 // LOGIKA ERROR: Jika tanggal kembali lebih mundur dari tanggal pinjam
                 if (diffDays < 0) {
                     summaryBox.classList.remove('d-none');
-                    summaryBox.classList.replace('alert-info', 'alert-danger'); // Ubah warna jadi merah
+                    summaryBox.classList.replace('alert-info', 'alert-danger'); 
                     summaryBox.innerHTML =
-                        '<strong>⚠️ Kesalahan:</strong> Tanggal kembali tidak boleh lebih awal dari tanggal pinjam.';
-                    btnSubmit.disabled = true; // Kunci tombol submit!
-                    return; // Hentikan perhitungan
+                        '<strong> Kesalahan:</strong> Tanggal kembali tidak boleh lebih awal dari tanggal pinjam.';
+                    btnSubmit.disabled = true; 
+                    return; 
                 }
 
-                // LOGIKA NORMAL: Jika pinjam dan kembali di hari yang sama, hitung 1 hari
                 if (diffDays === 0) {
                     diffDays = 1;
                 }
@@ -103,7 +102,7 @@
                 summaryBox.classList.remove('d-none');
                 summaryBox.classList.replace('alert-danger', 'alert-info');
                 summaryBox.innerHTML = `
-                <h6 class="fw-bold text-dark mb-3">🧾 Rincian Tagihan</h6>
+                <h6 class="fw-bold text-dark mb-3"> Rincian Tagihan</h6>
                 <div class="d-flex justify-content-between mb-1 text-dark">
                     <span>Durasi Sewa:</span>
                     <span class="fw-bold">${diffDays} Hari</span>
