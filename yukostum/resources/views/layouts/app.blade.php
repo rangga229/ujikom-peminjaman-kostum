@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yukostum - Sewa Kostum Terlengkap</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
 
     <style>
         body {
@@ -145,7 +145,7 @@
         </nav>
     @endif
 
-    <main class="container py-5 flex-grow-1">
+    <main class="container py-5 grow">
 
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show shadow-sm fw-bold rounded-4" role="alert">
@@ -165,7 +165,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
 </body>
 

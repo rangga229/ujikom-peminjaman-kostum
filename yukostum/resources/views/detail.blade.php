@@ -47,7 +47,7 @@
                             <span class="badge bg-dark text-warning mb-3 px-3 py-2 rounded-pill shadow-sm fs-6">{{ $costume->type }}</span>
                             <h2 class="card-title fw-bold text-dark mb-4">{{ $costume->name }}</h2>
                             
-                            <div class="bg-dark text-white p-4 rounded-4 mb-4 shadow-sm border border-warning border-2">
+                            <div class="bg-dark text-white p-4 rounded-4 mb-4 shadow-sm border border-warning">
                                 <span class="text-white-50 d-block text-uppercase fw-bold small mb-1">Harga Sewa</span>
                                 <h2 class="text-warning fw-bold mb-0">Rp {{ number_format($costume->price, 0, ',', '.') }}
                                     <span class="fs-6 text-white-50 fw-normal">/ hari</span>
