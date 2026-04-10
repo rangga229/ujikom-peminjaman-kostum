@@ -21,8 +21,8 @@
                             {{ $labelPendapatan }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 mt-2">
-                            <li><a class="dropdown-item fw-medium {{ $filterPendapatan == 'minggu' ? 'bg-warning text-dark' : '' }}" href="?filter=minggu">📅 7 Hari Terakhir</a></li>
-                            <li><a class="dropdown-item fw-medium {{ $filterPendapatan == 'bulan' ? 'bg-warning text-dark' : '' }}" href="?filter=bulan">📅 Bulan Ini</a></li>
+                            <li><a class="dropdown-item fw-medium {{ $filterPendapatan == 'minggu' ? 'bg-warning text-dark' : '' }}" href="?filter=minggu"> 7 Hari Terakhir</a></li>
+                            <li><a class="dropdown-item fw-medium {{ $filterPendapatan == 'bulan' ? 'bg-warning text-dark' : '' }}" href="?filter=bulan"> Bulan Ini</a></li>
                         </ul>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
     <div class="col-lg-7 mb-4">
         <div class="card shadow-sm border-0 rounded-4 h-100">
             <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
-                <h6 class="fw-bold text-dark mb-0 text-uppercase">🔥 Top 5 Kostum Terlaris (Bulan Ini)</h6>
+                <h6 class="fw-bold text-dark mb-0 text-uppercase"> Top 5 Kostum Terlaris (Bulan Ini)</h6>
                 <a href="/admin/kostum" class="text-muted small fw-bold text-decoration-none">Kelola Kostum →</a>
             </div>
             <div class="card-body p-0">
@@ -84,7 +84,7 @@
                         </li>
                     @empty
                         <li class="list-group-item text-center py-5 text-muted bg-light">
-                            <div class="fs-1 mb-2 opacity-50">📉</div>
+                            <div class="fs-1 mb-2 opacity-50"></div>
                             <h6 class="fw-bold">Belum ada penyewaan bulan ini.</h6>
                         </li>
                     @endforelse
