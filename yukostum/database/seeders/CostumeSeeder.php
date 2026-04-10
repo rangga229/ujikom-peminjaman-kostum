@@ -22,9 +22,9 @@ class CostumeSeeder extends Seeder
         ]);
 
         Costume::create([
-            'name' => 'Baju Adat Jawa (Beskap Pria)',
+            'name' => 'Jas Kelulusan Sekolah',
             'images' => [], 
-            'type' => 'Pesta Umum',
+            'type' => 'Acara Sekolah',
             'size' => 'L',
             'color' => 'Hitam',
             'material' => 'Beludru',
@@ -34,9 +34,21 @@ class CostumeSeeder extends Seeder
         ]);
 
         Costume::create([
-            'name' => 'Gaun Pesta Mewah (Eropa)',
+            'name' => 'Gaun Pengantin Wanita',
             'images' => [], 
             'type' => 'Pernikahan',
+            'size' => 'S',
+            'color' => 'Merah Maroon',
+            'material' => 'Sutra & Brokat',
+            'stock' => 2,
+            'condition' => 'Baik',
+            'price' => 120000
+        ]);
+
+        Costume::create([
+            'name' => 'Kebaya Tradisional',
+            'images' => [], 
+            'type' => 'Pentas Tari',
             'size' => 'S',
             'color' => 'Merah Maroon',
             'material' => 'Sutra & Brokat',
