@@ -104,7 +104,7 @@
                             @elseif(Auth::user()->role == 'pelanggan')
                                 <li class="nav-item"><a class="nav-link" href="/riwayat">Riwayat Sewa Saya</a></li>
                                 <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                                    <a class="nav-link nav-link-highlight rounded-pill px-4 text-center" href="/dashboard">✨ Dashboard Saya</a>
+                                    <a class="nav-link nav-link-highlight rounded-pill px-4 text-center" href="/dashboard"> Dashboard Saya</a>
                                 </li>
                             @endif
                         @endauth
