@@ -36,11 +36,11 @@ Sistem ini mendukung 3 Hak Akses (Role) berbeda: Admin, Petugas Gudang, dan Pela
 
 ## Teknologi yang Digunakan
 
-* Backend: PHP (Laravel Framework)
+* Backend: PHP (Laravel Framework versi 12)
 * Frontend: Blade Templating, HTML5, CSS3
 * UI Framework: Bootstrap 5.3 (Terintegrasi Offline)
 * Tipografi: Plus Jakarta Sans (Terintegrasi Offline)
-* Database: MySQL / MariaDB
+* Database: MySQL 
 * Keamanan: Hash Password, CSRF Protection, Controller Middleware Protection.
 
 ---
