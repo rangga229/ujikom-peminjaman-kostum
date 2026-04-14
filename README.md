@@ -84,6 +84,33 @@ Aplikasi sekarang dapat diakses melalui browser di: http://localhost:8000
 
 ---
 
+   ```
+## 💻 Cara Menjalankan Aplikasi
+Setelah proses instalasi selesai, jalankan *server* lokal Laravel dengan perintah:
+```bash
+php artisan serve
+
+```
+Aplikasi sekarang dapat diakses melalui *browser* di alamat: **http://127.0.0.1:8000**
+### 🔑 Akun Default (Login Uji Coba)
+ * **Admin:** * Email: admin@yukostum.com
+   * Password: password (atau sesuaikan dengan seeder Anda)
+ * **Pelanggan:** * Email: user@gmail.com
+   * Password: password (atau sesuaikan dengan seeder Anda)
+## 📖 Panduan Penggunaan Singkat
+### Alur Pelanggan (Menyewa Baju):
+ 1. Buka halaman utama, lakukan **Registrasi** atau **Login**.
+ 2. Masuk ke menu **Katalog Kostum**, pilih baju yang tersedia, lalu klik **Lihat Detail** > **Sewa Sekarang**.
+ 3. Pilih tanggal peminjaman dan pengembalian.
+ 4. Pilih metode pembayaran dan unggah **Foto Bukti Transfer**.
+ 5. Setelah selesai dipakai, buka menu **Riwayat Sewa**, klik **Kembalikan Barang**, dan unggah foto kondisi fisik barang saat dikembalikan.
+### Alur Admin (Memproses Pesanan):
+ 1. Login menggunakan akun Admin.
+ 2. Masuk ke menu **Pesanan Masuk**.
+ 3. Jika ada pesanan berstatus *Pending*, klik **Cek Pembayaran**, lihat bukti transfer, lalu klik **Setujui** (Stok akan otomatis berkurang).
+ 4. Jika pelanggan sudah mengembalikan barang (Status *Menunggu Validasi*), klik **Validasi & Selesai**.
+ 5. Cek kondisi fisik barang secara langsung. Jika aman pilih *Aman* (Rp 0), jika telat sistem akan memunculkan nominal denda otomatis, lalu klik **Simpan**. Selesai!
+
 ## Struktur Database Utama (ERD Konseptual)
 
 Proyek ini ditopang oleh 4 tabel relasional utama:
